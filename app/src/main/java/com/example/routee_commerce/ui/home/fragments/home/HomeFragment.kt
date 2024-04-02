@@ -70,11 +70,11 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-//        binding.categoriesShimmerViewContainer.startShimmerAnimation()
+//        binding.categoriesShimmerViewContainer.startShimmer()
     }
 
     override fun onPause() {
-//        binding.categoriesShimmerViewContainer.stopShimmerAnimation()
+//        binding.categoriesShimmerViewContainer.stopShimmer()
         super.onPause()
 
     }
