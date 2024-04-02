@@ -58,11 +58,14 @@ dependencies {
     //rounded image
     implementation(libs.roundedimage)
 
+    //glide
+    implementation(libs.glide)
     //picasso
     implementation(libs.picasso)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
 
 
 }
