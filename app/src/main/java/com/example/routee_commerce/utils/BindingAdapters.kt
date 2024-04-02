@@ -1,9 +1,11 @@
 package com.example.routee_commerce.utils
 
 
+import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.example.routee_commerce.R
+import com.google.android.material.textfield.TextInputLayout
 import com.squareup.picasso.Picasso
 
 class BindingAdapters {
@@ -28,5 +30,17 @@ class BindingAdapters {
                 .into(imageView)
         }
 
+    }
+}
+@BindingAdapter("app:Error")
+fun setTextInputLayoutError(textInputLayout: TextInputLayout, error: String?) {
+    textInputLayout.error = error
+    textInputLayout.errorIconDrawable = null
+}
+
+@BindingAdapter("app:clearFocusOnCondition")
+fun clearFocusOnCondition(view: View, condition: Boolean) {
+    if (condition) {
+        view.clearFocus()
     }
 }
