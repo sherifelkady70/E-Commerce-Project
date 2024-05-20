@@ -44,10 +44,7 @@ class RegisterFragment : Fragment() {
 
 
 
-    private fun showSuccessView() {
-        viewBinding.icNext.isVisible = true
-        viewBinding.progressBar.isVisible = false
-    }
+
 
     private fun showErrorView(message: String) {
         viewBinding.icNext.isVisible = true
