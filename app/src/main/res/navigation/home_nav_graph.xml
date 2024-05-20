@@ -23,11 +23,6 @@
         android:name="com.example.routee_commerce.ui.home.fragments.categories.CategoriesFragment"
         android:label="CategoriesFragment"
         tools:layout="@layout/fragment_categories">
-        <argument
-            android:name="category"
-            android:defaultValue="@null"
-            app:argType="com.example.domain.model.Category"
-            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/productListFragment"
