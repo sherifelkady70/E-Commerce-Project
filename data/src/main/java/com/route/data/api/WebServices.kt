@@ -1,10 +1,11 @@
 package com.route.data.api
 
-import com.route.domain.models.Category
+import com.route.data.api.model.CategoryDTO
+import com.route.data.api.model.Response
 import kotlinx.coroutines.flow.Flow
 import retrofit2.http.GET
 
 interface WebServices {
     @GET("/api/v1/categories")
-    suspend fun getAllCategories() : Flow<List<Category>>
+    suspend fun getCategories() : Flow<Response<List<CategoryDTO?>?>>
 }
