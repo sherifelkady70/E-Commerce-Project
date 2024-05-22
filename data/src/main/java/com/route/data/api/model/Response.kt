@@ -13,10 +13,10 @@ data class Response<T>(
 	@field:SerializedName("results")
 	val results: Int? = null ,
 
-	@field:SerializedName("results")
+	@field:SerializedName("statusMsg")
 	val statusMsg: String? = null ,
 
-	@field:SerializedName("results")
+	@field:SerializedName("message")
 	val message: String? = null
 
 )

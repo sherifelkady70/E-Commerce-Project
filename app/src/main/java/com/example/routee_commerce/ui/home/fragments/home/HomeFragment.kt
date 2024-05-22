@@ -6,49 +6,51 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.example.routee_commerce.R
 import com.example.routee_commerce.databinding.FragmentHomeBinding
 import com.example.routee_commerce.model.Category
 import com.example.routee_commerce.model.Product
+import com.example.routee_commerce.ui.base.BaseFragment
 import com.example.routee_commerce.ui.home.fragments.home.adapters.CategoriesAdapter
 import com.example.routee_commerce.ui.home.fragments.home.adapters.ProductsAdapter
 import com.example.routee_commerce.ui.productDetails.ProductDetailsActivity
+import dagger.hilt.android.AndroidEntryPoint
 
 
-class HomeFragment : Fragment() {
-    private lateinit var binding: FragmentHomeBinding
+@AndroidEntryPoint
+class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
+
      private val categoriesAdapter = CategoriesAdapter()
      private val mostSellingProductsAdapter = ProductsAdapter()
      private val categoryProductsAdapter = ProductsAdapter()
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
-
+        viewModel.getCategories()
+        myObserveLiveData()
+        dataBinding.lifecycleOwner = this
     }
+
+    override fun getLayoutId(): Int = R.layout.fragment_home
+    private val mViewModel : HomeFragmentViewModel by viewModels()
+    override fun initViewModel(): HomeFragmentViewModel = mViewModel
 
     private fun initViews() {
         categoriesAdapter.categoryClicked = { position, category ->
 //            navigateToCategoriesFragment(category)
         }
 
-        binding.categoriesRv.adapter = categoriesAdapter
-        binding.mostSellingProductsRv.adapter = mostSellingProductsAdapter
-        binding.categoryProductsRv.adapter = categoryProductsAdapter
-        binding.categoryNameTv.text = getString(R.string.electronics)
+        dataBinding.categoriesRv.adapter = categoriesAdapter
+        dataBinding.mostSellingProductsRv.adapter = mostSellingProductsAdapter
+        dataBinding.categoryProductsRv.adapter = categoryProductsAdapter
+        dataBinding.categoryNameTv.text = getString(R.string.electronics)
 //        categoryProductsAdapter.bindProducts()
 //        mostSellingProductsAdapter.bindProducts()
-//        categoriesAdapter.bindCategories()
+
+
 
     }
 
@@ -80,9 +82,16 @@ class HomeFragment : Fragment() {
     }
     override fun onDestroyView() {
         super.onDestroyView()
-        binding.unbind()
+        dataBinding.unbind()
 
     }
 
+    fun myObserveLiveData() {
+        viewModel.categoriesList.observe(viewLifecycleOwner){
+            if (it != null) {
+                categoriesAdapter.bindCategories(it)
+            }
+        }
+    }
 
 }

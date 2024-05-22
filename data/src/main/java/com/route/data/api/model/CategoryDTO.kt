@@ -23,7 +23,9 @@ data class CategoryDTO(
 	@field:SerializedName("updatedAt")
 	val updatedAt: String? = null
 ){
-	fun toCategory() : Category {
+	fun toCategory() : Category { //to convert the model that is get from API Call  (CategoryDTO)
+		                         // to the model that is in domain (Category)
+		                         // because go to ui to display only this fields that is in (Category model)
 		return Category(
 			image = image ,
 			id = id ,
