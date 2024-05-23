@@ -7,5 +7,5 @@ import retrofit2.http.GET
 
 interface WebServices {
     @GET("/api/v1/categories")
-    suspend fun getCategories() : Flow<Response<List<CategoryDTO?>?>>
+    suspend fun getCategories() : Response<List<CategoryDTO?>?>
 }
