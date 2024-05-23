@@ -36,7 +36,6 @@
                     android:textSize="18sp"
                     app:layout_constraintTop_toTopOf="parent" />
 
-
                 <com.facebook.shimmer.ShimmerFrameLayout
                     android:id="@+id/most_selling_products_shimmer_view_container"
                     android:layout_width="match_parent"
@@ -71,6 +70,7 @@
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
+
                 <TextView
                     android:id="@+id/categories_tv"
                     android:layout_width="match_parent"
@@ -82,7 +82,6 @@
                     android:textColor="@color/blue"
                     android:textSize="18sp"
                     app:layout_constraintTop_toBottomOf="@id/most_selling_products_shimmer_view_container" />
-
 
                 <com.facebook.shimmer.ShimmerFrameLayout
                     android:id="@+id/categories_shimmer_view_container"
@@ -97,18 +96,12 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="150dp"
                         android:orientation="horizontal">
 
-                        <include layout="@layout/home_fragment_categories_placeholder_layout" />
 
-                        <include layout="@layout/home_fragment_categories_placeholder_layout" />
-
-                        <include layout="@layout/home_fragment_categories_placeholder_layout" />
 
                     </LinearLayout>
-
-
                 </com.facebook.shimmer.ShimmerFrameLayout>
 
                 <TextView
