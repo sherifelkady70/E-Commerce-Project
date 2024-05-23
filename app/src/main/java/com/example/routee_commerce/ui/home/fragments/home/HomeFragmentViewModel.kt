@@ -23,6 +23,7 @@ class HomeFragmentViewModel @Inject constructor(
                 when(it){
                     is Resource.Success ->{
                         categoriesList.postValue(it.data)
+                        isLoading.postValue(false)
                     }
                     else ->{
                         handleResource(it)
