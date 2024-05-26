@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.routee_commerce.R
 import com.example.routee_commerce.databinding.FragmentHomeBinding
 import com.example.routee_commerce.model.Category
@@ -18,6 +19,8 @@ import com.example.routee_commerce.ui.home.fragments.home.adapters.CategoriesAda
 import com.example.routee_commerce.ui.home.fragments.home.adapters.ProductsAdapter
 import com.example.routee_commerce.ui.productDetails.ProductDetailsActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -30,14 +33,14 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
-        viewModel.getCategories()
+        viewModel.doAction(HomeContract.Action.initPage)
         myObserveLiveData()
         dataBinding.lifecycleOwner = this
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_home
-    private val mViewModel : HomeFragmentViewModel by viewModels()
-    override fun initViewModel(): HomeFragmentViewModel = mViewModel
+    private val mViewModel : HomeContract.ViewModel by viewModels<HomeFragmentViewModel>()
+    override fun initViewModel(): HomeFragmentViewModel = mViewModel as HomeFragmentViewModel
 
     private fun initViews() {
         categoriesAdapter.categoryClicked = { position, category ->
@@ -88,12 +91,44 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
     }
 
     private fun myObserveLiveData() {
-        viewModel.categoriesList.observe(viewLifecycleOwner){
-            dataBinding.categoriesShimmerViewContainer.hideShimmer()
-            if (it != null) {
-                categoriesAdapter.bindCategories(it)
+        viewModel.event.observe(viewLifecycleOwner,::onEventChange)
+        lifecycleScope.launch {
+            viewModel.state.collect{
+                renderView(it)
             }
         }
     }
 
+    private fun renderView(state : HomeContract.State) {
+        when(state){
+            is HomeContract.State.Success ->{
+                showCategories(state.categoriesList)
+            }
+            is HomeContract.State.Loading ->{
+                showLoadingEvent()
+            }
+        }
+    }
+
+    private fun onEventChange(event : HomeContract.Event) {
+        when(event) {
+            is HomeContract.Event.ShowMessage -> {
+                showDialog(event.message.message)
+            }
+
+            is HomeContract.Event.ShowLoading -> {
+              showLoading()
+            }
+        }
+    }
+
+    private fun showCategories(categories  : List<com.route.domain.models.Category>?) {
+        dataBinding.categoriesShimmerViewContainer.hideShimmer()
+            if (categories != null) {
+                categoriesAdapter.bindCategories(categories)
+            }
+    }
+    private fun showLoadingEvent() {
+        dataBinding.categoriesShimmerViewContainer.showShimmer(true)
+    }
 }

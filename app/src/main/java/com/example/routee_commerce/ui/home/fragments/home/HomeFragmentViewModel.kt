@@ -23,7 +23,7 @@ class HomeFragmentViewModel @Inject constructor(
 //     val categoriesList = MutableLiveData<List<com.route.domain.models.Category>?>()
 
 
-    private val _state = MutableStateFlow<HomeContract.State>(HomeContract.State.Loading())
+    private val _state = MutableStateFlow<HomeContract.State>(HomeContract.State.Loading)
     private val _event = SingleLiveEvent<HomeContract.Event>()
     override val event: LiveData<HomeContract.Event>
         get() {
@@ -39,19 +39,20 @@ class HomeFragmentViewModel @Inject constructor(
     }
 
     private fun initPage() {
-
+        getCategories()
     }
 
-    fun getCategories() {
+    private fun getCategories(){
         viewModelScope.launch(Dispatchers.IO){
-            categoryUseCase.invoke().collect{
+            categoryUseCase.invoke().collect{ it ->
                 when(it){
                     is Resource.Success ->{
                         _state.emit(HomeContract.State.Success(it.data))
-                        _state.emit(HomeContract.State.Loading(false))
                     }
                     else ->{
-                        handleResource(it)
+                        extractViewMessage(it)?.let {
+                            _event.postValue(HomeContract.Event.ShowMessage(it))
+                        }
                     }
                 }
             }
