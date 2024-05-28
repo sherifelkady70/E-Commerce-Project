@@ -1,11 +1,10 @@
-package com.example.routee_commerce.model
+package com.route.domain.models
 
-import android.os.Parcelable
-import com.route.domain.models.Brand
 import kotlinx.parcelize.Parcelize
+import android.os.Parcelable
 
 @Parcelize
-data class Product(
+data class Products(
 	val sold: Int? = null,
 	val images: List<String?>? = null,
 	val quantity: Int? = null,
@@ -17,14 +16,9 @@ data class Product(
 	val createdAt: String? = null,
 	val price: Int? = null,
 	val id: String? = null,
-	val subcategory: List<Subcategory?>? = null,
+	val subcategory: List<Category?>? = null,
 	val category: Category? = null,
-	val priceAfterDiscount: Int? = null,
 	val brand: Brand? = null,
 	val slug: String? = null,
 	val updatedAt: String? = null
-) : Parcelable {
-	companion object {
-		const val PRODUCT = "product"
-	}
-}
+) : Parcelable
