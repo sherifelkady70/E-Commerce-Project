@@ -14,4 +14,5 @@ abstract class RepositoryModule {
     @Binds
     abstract fun provideCategoryRepository(impl : CategoryRepositoryImpl)
     : CategoriesRepository
+
 }
