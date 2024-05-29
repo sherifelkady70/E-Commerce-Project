@@ -4,7 +4,7 @@ import com.route.domain.contracts.products.ProductsRepository
 import javax.inject.Inject
 
 class ProductsUseCase @Inject constructor(
-    val ProductsRepository : ProductsRepository
+    private val ProductsRepository : ProductsRepository
 ) {
 
 }

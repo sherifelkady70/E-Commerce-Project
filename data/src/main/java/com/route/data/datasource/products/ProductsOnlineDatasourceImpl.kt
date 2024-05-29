@@ -7,7 +7,7 @@ import com.route.domain.contracts.products.SortedBy
 import com.route.domain.models.Products
 import javax.inject.Inject
 
-class ProductsOnlineDatasourceImpl @Inject constructor(val webServices: WebServices)
+class ProductsOnlineDatasourceImpl @Inject constructor(private val webServices: WebServices)
     : ProductOnlineDataSource{
     override suspend fun getProducts(
         sortedBy: SortedBy?,
