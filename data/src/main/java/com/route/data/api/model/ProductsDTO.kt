@@ -1,5 +1,7 @@
 package com.route.data.api.model
 
+import com.route.domain.models.Products
+
 data class ProductsDTO(
 	val sold: Int? = null,
 	val images: List<String?>? = null,
@@ -17,4 +19,11 @@ data class ProductsDTO(
 	val brand: BrandDTO? = null,
 	val slug: String? = null,
 	val updatedAt: String? = null
-)
+){
+	fun toProducts() : Products{
+		return Products(sold,images,quantity
+			,imageCover, description, title, ratingsQuantity, ratingsAverage
+		,createdAt,price,id, subcategory?.map { it?.toCategory()}?.toList(),
+			category?.toCategory(),brand?.toBrand(),updatedAt = updatedAt)
+	}
+}
