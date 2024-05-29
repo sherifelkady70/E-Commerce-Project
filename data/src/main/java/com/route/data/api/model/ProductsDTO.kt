@@ -16,6 +16,7 @@ data class ProductsDTO(
 	val id: String? = null,
 	val subcategory: List<CategoryDTO?>? = null,
 	val category: CategoryDTO? = null,
+	val priceAfterDiscount: Int? = null,
 	val brand: BrandDTO? = null,
 	val slug: String? = null,
 	val updatedAt: String? = null
@@ -23,7 +24,7 @@ data class ProductsDTO(
 	fun toProducts() : Products{
 		return Products(sold,images,quantity
 			,imageCover, description, title, ratingsQuantity, ratingsAverage
-		,createdAt,price,id, subcategory?.map { it?.toCategory()}?.toList(),
-			category?.toCategory(),brand?.toBrand(),updatedAt = updatedAt)
+		,createdAt,price=price,id=id, subcategory=subcategory?.map { it?.toCategory()}?.toList(),
+			category=category?.toCategory(),brand=brand?.toBrand(),updatedAt = updatedAt)
 	}
 }

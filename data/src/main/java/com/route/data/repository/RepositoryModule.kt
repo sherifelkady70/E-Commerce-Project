@@ -18,5 +18,6 @@ abstract class RepositoryModule {
     : CategoriesRepository
 
     @Binds
-    abstract fun provideProductsRepository(impl : ProductsRepositoryImpl) : ProductsRepository
+    abstract fun provideProductsRepository(impl : ProductsRepositoryImpl)
+    : ProductsRepository
 }

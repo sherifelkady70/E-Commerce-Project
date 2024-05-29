@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.example.routee_commerce.databinding.FragmentProductListBinding
-import com.example.routee_commerce.model.Product
 import com.example.routee_commerce.ui.home.fragments.productList.adapter.ProductsAdapter
+import com.route.domain.models.Products
 
 
 class ProductListFragment : Fragment() {
@@ -52,7 +52,7 @@ class ProductListFragment : Fragment() {
     }
 
 
-    private fun showSuccessView(products: List<Product?>) {
+    private fun showSuccessView(products: List<Products?>) {
 
         productsAdapter.bindProducts(products)
         binding.successView.isVisible = true

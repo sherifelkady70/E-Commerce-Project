@@ -6,15 +6,16 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.routee_commerce.databinding.ItemProductBinding
-import com.example.routee_commerce.model.Product
+import com.route.domain.models.Products
 
-class ProductsAdapter(private var products: List<Product?>? = null) :
+
+class ProductsAdapter(private var products: List<Products?>? = null) :
     RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
 
     inner class ViewHolder(val itemProductBinding: ItemProductBinding) :
         RecyclerView.ViewHolder(itemProductBinding.root) {
 
-        fun bind(product: Product?) {
+        fun bind(product: Products?) {
             itemProductBinding.product = product
             itemProductBinding.executePendingBindings()
             if (product?.priceAfterDiscount != null) {
@@ -58,12 +59,12 @@ class ProductsAdapter(private var products: List<Product?>? = null) :
         }
     }
 
-    fun bindProducts(products: List<Product?>) {
+    fun bindProducts(products: List<Products?>) {
         this.products = products
         notifyDataSetChanged()
     }
 
-    var addProductToWishListClicked: ((product: Product) -> Unit)? = null
-    var addProductToCartClicked: ((product: Product) -> Unit)? = null
+    var addProductToWishListClicked: ((product: Products) -> Unit)? = null
+    var addProductToCartClicked: ((product: Products) -> Unit)? = null
 
 }
