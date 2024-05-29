@@ -13,6 +13,7 @@ import com.example.routee_commerce.ui.base.BaseFragment
 import com.example.routee_commerce.ui.home.fragments.home.adapters.CategoriesAdapter
 import com.example.routee_commerce.ui.home.fragments.home.adapters.ProductsAdapter
 import com.example.routee_commerce.ui.productDetails.ProductDetailsActivity
+import com.route.domain.models.Products
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -95,8 +96,9 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
 
     private fun renderView(state : HomeContract.State) {
         when(state){
-            is HomeContract.State.CategorySuccess ->{
+            is HomeContract.State.Success ->{
                 showCategories(state.categoriesList)
+                showMostSellingProducts(state.mostSellingProductsList)
             }
             is HomeContract.State.Loading ->{
                 showLoadingEvent()
@@ -124,5 +126,12 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
     }
     private fun showLoadingEvent() {
         dataBinding.categoriesShimmerViewContainer.showShimmer(true)
+    }
+
+    private fun showMostSellingProducts(mostSellingProducts : List<Products>?) {
+        dataBinding.mostSellingProductsShimmerViewContainer.hideShimmer()
+       if(mostSellingProducts != null){
+           mostSellingProductsAdapter.bindProducts(mostSellingProducts)
+       }
     }
 }

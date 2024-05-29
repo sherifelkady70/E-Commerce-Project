@@ -18,6 +18,7 @@ data class Products(
 	val id: String? = null,
 	val subcategory: List<Category?>? = null,
 	val category: Category? = null,
+	val priceAfterDiscount: Int? = null,
 	val brand: Brand? = null,
 	val slug: String? = null,
 	val updatedAt: String? = null

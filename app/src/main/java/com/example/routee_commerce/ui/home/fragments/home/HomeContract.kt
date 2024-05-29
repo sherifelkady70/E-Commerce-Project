@@ -25,10 +25,9 @@ class HomeContract {
 
     sealed class State {
         data object Loading : State()
-        data class CategorySuccess (val categoriesList : List<Category>? = null)
+        data class Success (val categoriesList : List<Category>? = null,
+            val mostSellingProductsList : List<Products>? = null)
             : State()
 
-        data class MostSellingProductsSuccess (val productsList : List<Products>? = null)
-            : State()
     }
 }

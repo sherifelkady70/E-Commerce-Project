@@ -39,6 +39,7 @@ class HomeFragmentViewModel @Inject constructor(
 
     private fun initPage() {
         getCategories()
+        getMostSellingProducts()
     }
 
     private fun getMostSellingProducts() {
@@ -46,7 +47,7 @@ class HomeFragmentViewModel @Inject constructor(
             mostSellingProductsUseCase.invoke().collect{ it ->
                 when(it) {
                     is Resource.Success ->{
-                        _state.emit(HomeContract.State.MostSellingProductsSuccess(it.data))
+                        _state.emit(HomeContract.State.Success(mostSellingProductsList = it.data))
                     }
                     else ->{
                         extractViewMessage(it)?.let {
@@ -62,7 +63,7 @@ class HomeFragmentViewModel @Inject constructor(
             categoryUseCase.invoke().collect{ it ->
                 when(it){
                     is Resource.Success ->{
-                        _state.emit(HomeContract.State.CategorySuccess(it.data))
+                        _state.emit(HomeContract.State.Success(categoriesList = it.data))
                     }
                     else ->{
                         extractViewMessage(it)?.let {
