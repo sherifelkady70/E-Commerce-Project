@@ -1,6 +1,7 @@
 package com.route.data.repository.categoryProducts
 
 import com.route.data.contracts.categoryproducts.CategoryProductsOnlineDatasource
+import com.route.data.toFlow
 import com.route.domain.common.Resource
 import com.route.domain.contracts.categoryproducts.CategoryProductsRepository
 import com.route.domain.models.Products
@@ -12,6 +13,6 @@ abstract class CategoryProductsRepositoryImpl  @Inject constructor(
 ): CategoryProductsRepository
 {
     override suspend fun getCategoryProducts(): Flow<Resource<List<Products>?>> {
-        TODO("Not yet implemented")
+        return toFlow{ categoryProductsOnlineDatasource.getCategoryProducts() }
     }
 }
