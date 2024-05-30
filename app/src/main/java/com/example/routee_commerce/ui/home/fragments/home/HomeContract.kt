@@ -10,6 +10,7 @@ class HomeContract {
 
     interface ViewModel {
         fun doAction(action : Action)
+
         val event : LiveData<Event>
         val state : StateFlow<State>
     }
@@ -26,7 +27,8 @@ class HomeContract {
     sealed class State {
         data object Loading : State()
         data class Success (val categoriesList : List<Category>? = null,
-            val mostSellingProductsList : List<Products>? = null)
+            val mostSellingProductsList : List<Products>? = null,
+            val categoryProductsList : List<Products>?=null)
             : State()
 
     }

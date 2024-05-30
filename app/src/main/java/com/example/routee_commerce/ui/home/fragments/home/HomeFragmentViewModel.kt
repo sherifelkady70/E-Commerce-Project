@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.routee_commerce.ui.base.BaseViewModel
 import com.example.routee_commerce.utils.SingleLiveEvent
 import com.route.domain.common.Resource
+import com.route.domain.usecases.CategoryProductsUseCase
 import com.route.domain.usecases.CategoryUseCase
 import com.route.domain.usecases.MostSellingProductsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeFragmentViewModel @Inject constructor(
     private val categoryUseCase: CategoryUseCase,
-    private val mostSellingProductsUseCase: MostSellingProductsUseCase
+    private val mostSellingProductsUseCase: MostSellingProductsUseCase,
+    private val categoryProductsUseCase : CategoryProductsUseCase
 ) : BaseViewModel() , HomeContract.ViewModel {
 //     val categoriesList = MutableLiveData<List<com.route.domain.models.Category>?>()
 
@@ -40,8 +42,16 @@ class HomeFragmentViewModel @Inject constructor(
     private fun initPage() {
         getCategories()
         getMostSellingProducts()
+        getCategoryProducts()
     }
 
+    private fun getCategoryProducts() {
+        viewModelScope.launch(Dispatchers.IO) {
+            categoryProductsUseCase.getCategoryProducts().collect{
+                _state.emit(HomeContract.State.Success(it))
+            }
+        }
+    }
     private fun getMostSellingProducts() {
         viewModelScope.launch(Dispatchers.IO) {
             mostSellingProductsUseCase.invoke().collect{ it ->
