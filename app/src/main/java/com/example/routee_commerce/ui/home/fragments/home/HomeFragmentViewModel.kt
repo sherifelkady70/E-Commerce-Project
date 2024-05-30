@@ -47,8 +47,17 @@ class HomeFragmentViewModel @Inject constructor(
 
     private fun getCategoryProducts() {
         viewModelScope.launch(Dispatchers.IO) {
-            categoryProductsUseCase.getCategoryProducts().collect{
-                _state.emit(HomeContract.State.Success(it))
+            categoryProductsUseCase.getCategoryProducts().collect{ it ->
+                when(it) {
+                   is Resource.Success -> {
+                    _state.emit(HomeContract.State.Success(categoryProductsList = it.data))
+                }
+                    else -> {
+                        extractViewMessage(it)?.let {
+                            _event.postValue(HomeContract.Event.ShowMessage(it))
+                        }
+                    }
+                }
             }
         }
     }
