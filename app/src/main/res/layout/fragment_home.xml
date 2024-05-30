@@ -48,12 +48,8 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="250dp"
                         android:orientation="horizontal">
-
-                        <include layout="@layout/item_product_placeholder" />
-
-                        <include layout="@layout/item_product_placeholder" />
 
                     </LinearLayout>
 
@@ -69,8 +65,6 @@
                     tools:listitem="@layout/item_product"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-
                 <TextView
                     android:id="@+id/categories_tv"
                     android:layout_width="match_parent"
@@ -98,9 +92,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
                         android:orientation="horizontal">
-
-
-
                     </LinearLayout>
                 </com.facebook.shimmer.ShimmerFrameLayout>
 

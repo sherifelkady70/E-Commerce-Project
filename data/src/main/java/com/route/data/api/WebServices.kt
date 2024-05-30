@@ -18,4 +18,8 @@ interface WebServices {
         @Query("brand") brand:String?=null,
         @Query("category") category:String?=null
     ) : Response<List<ProductsDTO?>?>
+
+    @GET("/api/v1/products?limit=2")
+    suspend fun getCategoryProducts() : Response<List<ProductsDTO?>?>
+
 }
