@@ -8,7 +8,7 @@ import com.route.domain.models.Products
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-abstract class CategoryProductsRepositoryImpl  @Inject constructor(
+ class CategoryProductsRepositoryImpl  @Inject constructor(
     private val categoryProductsOnlineDatasource: CategoryProductsOnlineDatasource
 ): CategoryProductsRepository
 {

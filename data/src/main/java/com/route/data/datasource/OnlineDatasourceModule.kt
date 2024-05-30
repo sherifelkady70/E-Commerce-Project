@@ -4,6 +4,7 @@ import com.route.data.contracts.category.CategoryOnlineDatasource
 import com.route.data.contracts.categoryproducts.CategoryProductsOnlineDatasource
 import com.route.data.contracts.products.ProductOnlineDataSource
 import com.route.data.datasource.category.CategoryOnlineDatasourceImpl
+import com.route.data.datasource.categoryproducts.CategoryProductsOnlineDatasourceImpl
 import com.route.data.datasource.products.ProductsOnlineDatasourceImpl
 import com.route.data.repository.products.ProductsRepositoryImpl
 import com.route.domain.contracts.products.ProductsRepository
@@ -25,6 +26,6 @@ abstract class OnlineDatasourceModule {
     : ProductOnlineDataSource
 
     @Binds
-    abstract fun provideCategoryProductsDatasource(impl : CategoryOnlineDatasourceImpl)
+    abstract fun provideCategoryProductsDatasource(impl : CategoryProductsOnlineDatasourceImpl)
     : CategoryProductsOnlineDatasource
 }

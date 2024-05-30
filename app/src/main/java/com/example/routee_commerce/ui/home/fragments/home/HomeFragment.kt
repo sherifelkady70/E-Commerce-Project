@@ -99,6 +99,7 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
             is HomeContract.State.Success ->{
                 showCategories(state.categoriesList)
                 showMostSellingProducts(state.mostSellingProductsList)
+                showCategoryProducts(state.categoryProductsList)
             }
             is HomeContract.State.Loading ->{
                 showLoadingEvent()
@@ -133,5 +134,12 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
        if(mostSellingProducts != null){
            mostSellingProductsAdapter.bindProducts(mostSellingProducts)
        }
+    }
+
+    private fun showCategoryProducts(categoryProductsList : List<Products>?) {
+      //  dataBinding.categoryProductsShimmerViewContainer.hideShimmer()
+        if(categoryProductsList != null){
+            categoryProductsAdapter.bindProducts(categoryProductsList)
+        }
     }
 }
