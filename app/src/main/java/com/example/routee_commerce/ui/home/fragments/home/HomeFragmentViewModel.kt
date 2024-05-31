@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.routee_commerce.ui.base.BaseViewModel
 import com.example.routee_commerce.utils.SingleLiveEvent
 import com.route.domain.common.Resource
+import com.route.domain.models.Category
+import com.route.domain.models.Products
 import com.route.domain.usecases.CategoryProductsUseCase
 import com.route.domain.usecases.CategoryUseCase
 import com.route.domain.usecases.MostSellingProductsUseCase
@@ -45,12 +47,17 @@ class HomeFragmentViewModel @Inject constructor(
         getCategoryProducts()
     }
 
+   private val categories : List<Category>?=null
+    private val mostSellingProducts : List<Products>?=null
+    private val categoryProducts : List<Products>?=null
+
     private fun getCategoryProducts() {
         viewModelScope.launch(Dispatchers.IO) {
             categoryProductsUseCase.getCategoryProducts().collect{ it ->
                 when(it) {
                    is Resource.Success -> {
-                    _state.emit(HomeContract.State.Success(categoryProductsList = it.data))
+                    _state.emit(HomeContract.State.Success(categoryProductsList = it.data ,
+                        categoriesList = categories, mostSellingProductsList = mostSellingProducts))
                 }
                     else -> {
                         extractViewMessage(it)?.let {
@@ -66,7 +73,8 @@ class HomeFragmentViewModel @Inject constructor(
             mostSellingProductsUseCase.invoke().collect{ it ->
                 when(it) {
                     is Resource.Success ->{
-                        _state.emit(HomeContract.State.Success(mostSellingProductsList = it.data))
+                        _state.emit(HomeContract.State.Success(mostSellingProductsList = it.data,
+                            categoriesList = categories, categoryProductsList = categoryProducts))
                     }
                     else ->{
                         extractViewMessage(it)?.let {
@@ -82,7 +90,8 @@ class HomeFragmentViewModel @Inject constructor(
             categoryUseCase.invoke().collect{ it ->
                 when(it){
                     is Resource.Success ->{
-                        _state.emit(HomeContract.State.Success(categoriesList = it.data))
+                        _state.emit(HomeContract.State.Success(categoriesList = it.data, categoryProductsList = categoryProducts
+                        , mostSellingProductsList = mostSellingProducts))
                     }
                     else ->{
                         extractViewMessage(it)?.let {

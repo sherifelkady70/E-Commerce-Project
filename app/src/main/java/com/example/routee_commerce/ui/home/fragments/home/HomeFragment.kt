@@ -45,7 +45,7 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
         dataBinding.categoriesRv.adapter = categoriesAdapter
         dataBinding.mostSellingProductsRv.adapter = mostSellingProductsAdapter
         dataBinding.categoryProductsRv.adapter = categoryProductsAdapter
-        dataBinding.categoryNameTv.text = getString(R.string.electronics)
+        //dataBinding.categoryNameTv.text = getString(R.string.electronics)
 //        categoryProductsAdapter.bindProducts()
 //        mostSellingProductsAdapter.bindProducts()
 
@@ -137,7 +137,7 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
     }
 
     private fun showCategoryProducts(categoryProductsList : List<Products>?) {
-      //  dataBinding.categoryProductsShimmerViewContainer.hideShimmer()
+        dataBinding.categoryProductsShimmerViewContainer.hideShimmer()
         if(categoryProductsList != null){
             categoryProductsAdapter.bindProducts(categoryProductsList)
         }
