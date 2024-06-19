@@ -28,7 +28,7 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
-        viewModel.doAction(HomeContract.Action.initPage)
+        viewModel.doAction(HomeContract.Action.InitPage)
         myObserveLiveData()
         dataBinding.lifecycleOwner = this
     }

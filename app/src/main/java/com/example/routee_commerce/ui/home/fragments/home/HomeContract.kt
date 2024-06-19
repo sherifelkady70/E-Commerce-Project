@@ -16,7 +16,7 @@ class HomeContract {
     }
 
     sealed class Action { //intent
-        data object initPage : Action()
+        data object InitPage : Action()
     }
 
     sealed class Event {
