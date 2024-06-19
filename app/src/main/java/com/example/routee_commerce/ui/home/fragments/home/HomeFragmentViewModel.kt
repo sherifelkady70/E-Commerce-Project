@@ -47,9 +47,9 @@ class HomeFragmentViewModel @Inject constructor(
         getCategoryProducts()
     }
 
-   private val categories : List<Category>?=null
-    private val mostSellingProducts : List<Products>?=null
-    private val categoryProducts : List<Products>?=null
+    private val categories: List<Category>? = null
+    private val mostSellingProducts: List<Products>? = null
+    private val categoryProducts: List<Products>? = null
 
     private fun getCategoryProducts() {
         viewModelScope.launch(Dispatchers.IO) {
