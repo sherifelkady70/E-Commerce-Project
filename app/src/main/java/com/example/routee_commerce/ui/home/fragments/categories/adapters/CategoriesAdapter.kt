@@ -70,7 +70,7 @@ class CategoriesAdapter(private var categories: List<Category?>? = null) :
 
     }
 
-    fun bindCategories(categories: List<Category?>) {
+    fun bindCategories(categories: List<Category>?) {
         this.categories = categories
         notifyDataSetChanged()
     }

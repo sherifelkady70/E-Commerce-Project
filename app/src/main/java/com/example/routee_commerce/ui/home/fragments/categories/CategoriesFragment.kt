@@ -5,55 +5,54 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.example.routee_commerce.R
 import com.example.routee_commerce.databinding.FragmentCategoriesBinding
-import com.example.routee_commerce.model.Category
+import com.example.routee_commerce.ui.base.BaseFragment
 import com.example.routee_commerce.ui.home.fragments.categories.adapters.CategoriesAdapter
 import com.example.routee_commerce.ui.home.fragments.categories.adapters.SubcategoriesAdapter
+import com.example.routee_commerce.ui.home.fragments.home.HomeContract
+import com.example.routee_commerce.ui.home.fragments.home.HomeFragmentViewModel
 
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-class CategoriesFragment : Fragment() {
-    private lateinit var binding: FragmentCategoriesBinding
-    val categoriesAdapter= CategoriesAdapter()
-     val subcategoriesAdapter= SubcategoriesAdapter()
-    lateinit var viewModel: CategoriesFragmentViewModel
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        viewModel = ViewModelProvider(this)[CategoriesFragmentViewModel::class.java]
-        binding = FragmentCategoriesBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+@AndroidEntryPoint
+class CategoriesFragment : BaseFragment<CategoriesFragmentViewModel,FragmentCategoriesBinding>() {
+    private val categoriesAdapter= CategoriesAdapter()
+     private val subcategoriesAdapter= SubcategoriesAdapter()
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
         viewModel.doAction(CategoriesContract.Action.InitPage)
-        binding.lifecycleOwner = this
+        myObserveLiveData()
+        dataBinding.lifecycleOwner = this
         //loadCategories
     }
+
+    override fun getLayoutId(): Int = R.layout.fragment_categories
+    private val mViewModel : CategoriesContract.CategoriesViewModel by viewModels<CategoriesFragmentViewModel>()
+    override fun initViewModel(): CategoriesFragmentViewModel = mViewModel as CategoriesFragmentViewModel
 
     private fun initCategoryCard(category: com.route.domain.models.Category?) {
         Picasso.get()
             .load(category?.image)
             .centerCrop()
             .fit()
-            .into(binding.cardBgImv)
-        binding.selectedCategoryName.text = category?.name
+            .into(dataBinding.cardBgImv)
+        dataBinding.selectedCategoryName.text = category?.name
 
     }
 
 
     private fun initViews() {
-        binding.categoriesRv.adapter = categoriesAdapter
+        dataBinding.categoriesRv.adapter = categoriesAdapter
 
-        binding.subcategoryRv.adapter = subcategoriesAdapter
+        dataBinding.subcategoryRv.adapter = subcategoriesAdapter
 
 //        subcategoriesAdapter.bindSubcategories() with subcategories of the first category in categories list
 
@@ -63,7 +62,7 @@ class CategoriesFragment : Fragment() {
         }
     }
 
-    private fun observeLiveData(){
+    private fun myObserveLiveData(){
         viewModel.event.observe(viewLifecycleOwner,::onEventChange)
        lifecycleScope.launch {
            viewModel.state.collect{
@@ -74,10 +73,10 @@ class CategoriesFragment : Fragment() {
     private fun onEventChange(event : CategoriesContract.Event){
         when(event){
             is CategoriesContract.Event.ShowMessage -> {
-
+                showDialog(event.message.title)
             }
             is CategoriesContract.Event.ShowLoading -> {
-
+                showLoading()
             }
         }
     }
@@ -92,22 +91,22 @@ class CategoriesFragment : Fragment() {
         }
     }
     private fun showLoadingView() {
-        binding.categoriesShimmerViewContainer.isVisible = true
-        binding.categoriesShimmerViewContainer.startShimmer()
-        binding.errorView.isVisible = false
-        binding.successView.isVisible = false
+        dataBinding.categoriesShimmerViewContainer.isVisible = true
+        dataBinding.categoriesShimmerViewContainer.startShimmer()
+        dataBinding.errorView.isVisible = false
+        dataBinding.successView.isVisible = false
     }
 
 
-    private fun showSuccessView(categories: List<com.route.domain.models.Category?>) {
+    private fun showSuccessView(categories: List<com.route.domain.models.Category>?) {
 
         categoriesAdapter.bindCategories(categories)
-        binding.successView.isVisible = true
-        binding.errorView.isVisible = false
-        binding.categoriesShimmerViewContainer.isVisible = false
-        binding.categoriesShimmerViewContainer.stopShimmer()
-        initCategoryCard(categories[0])
-        categories[0]?.let {
+        dataBinding.successView.isVisible = true
+        dataBinding.errorView.isVisible = false
+        dataBinding.categoriesShimmerViewContainer.isVisible = false
+        dataBinding.categoriesShimmerViewContainer.stopShimmer()
+        initCategoryCard(categories?.get(0))
+        categories?.get(0)?.let {
             //LoadSubCategories
 
         }
@@ -117,12 +116,12 @@ class CategoriesFragment : Fragment() {
 
 
     private fun showErrorView(message: String) {
-        binding.errorView.isVisible = true
-        binding.successView.isVisible = false
-        binding.categoriesShimmerViewContainer.isVisible = false
-        binding.categoriesShimmerViewContainer.stopShimmer()
-        binding.errorMessage.text = message
-        binding.tryAgainBtn.setOnClickListener {
+        dataBinding.errorView.isVisible = true
+        dataBinding.successView.isVisible = false
+        dataBinding.categoriesShimmerViewContainer.isVisible = false
+        dataBinding.categoriesShimmerViewContainer.stopShimmer()
+        dataBinding.errorMessage.text = message
+        dataBinding.tryAgainBtn.setOnClickListener {
             //LoadCategories
         }
     }
@@ -130,11 +129,11 @@ class CategoriesFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        binding.categoriesShimmerViewContainer.startShimmer()
+        dataBinding.categoriesShimmerViewContainer.startShimmer()
     }
 
     override fun onPause() {
-        binding.categoriesShimmerViewContainer.stopShimmer()
+        dataBinding.categoriesShimmerViewContainer.stopShimmer()
         super.onPause()
 
     }
