@@ -6,22 +6,27 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.routee_commerce.databinding.FragmentCategoriesBinding
 import com.example.routee_commerce.model.Category
 import com.example.routee_commerce.ui.home.fragments.categories.adapters.CategoriesAdapter
 import com.example.routee_commerce.ui.home.fragments.categories.adapters.SubcategoriesAdapter
 
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.launch
 
 class CategoriesFragment : Fragment() {
     private lateinit var binding: FragmentCategoriesBinding
     val categoriesAdapter= CategoriesAdapter()
      val subcategoriesAdapter= SubcategoriesAdapter()
+    lateinit var viewModel: CategoriesFragmentViewModel
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        viewModel = ViewModelProvider(this)[CategoriesFragmentViewModel::class.java]
         binding = FragmentCategoriesBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -29,11 +34,12 @@ class CategoriesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
-
+        viewModel.doAction(CategoriesContract.Action.InitPage)
+        binding.lifecycleOwner = this
         //loadCategories
     }
 
-    private fun initCategoryCard(category: Category?) {
+    private fun initCategoryCard(category: com.route.domain.models.Category?) {
         Picasso.get()
             .load(category?.image)
             .centerCrop()
@@ -55,12 +61,36 @@ class CategoriesFragment : Fragment() {
             initCategoryCard(category)
             //LoadSubCategories
         }
-
-
     }
 
+    private fun observeLiveData(){
+        viewModel.event.observe(viewLifecycleOwner,::onEventChange)
+       lifecycleScope.launch {
+           viewModel.state.collect{
+               renderView(it)
+           }
+       }
+    }
+    private fun onEventChange(event : CategoriesContract.Event){
+        when(event){
+            is CategoriesContract.Event.ShowMessage -> {
 
+            }
+            is CategoriesContract.Event.ShowLoading -> {
 
+            }
+        }
+    }
+    private fun renderView(state : CategoriesContract.State){
+        when(state){
+            is CategoriesContract.State.Success -> {
+                showSuccessView(state.categoriesList)
+            }
+            is CategoriesContract.State.Loading -> {
+                showLoadingView()
+            }
+        }
+    }
     private fun showLoadingView() {
         binding.categoriesShimmerViewContainer.isVisible = true
         binding.categoriesShimmerViewContainer.startShimmer()
@@ -69,7 +99,7 @@ class CategoriesFragment : Fragment() {
     }
 
 
-    private fun showSuccessView(categories: List<Category?>) {
+    private fun showSuccessView(categories: List<com.route.domain.models.Category?>) {
 
         categoriesAdapter.bindCategories(categories)
         binding.successView.isVisible = true
@@ -91,12 +121,10 @@ class CategoriesFragment : Fragment() {
         binding.successView.isVisible = false
         binding.categoriesShimmerViewContainer.isVisible = false
         binding.categoriesShimmerViewContainer.stopShimmer()
-
         binding.errorMessage.text = message
         binding.tryAgainBtn.setOnClickListener {
             //LoadCategories
         }
-
     }
 
 

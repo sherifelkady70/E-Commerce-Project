@@ -36,7 +36,6 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
     override fun getLayoutId(): Int = R.layout.fragment_home
     private val mViewModel : HomeContract.ViewModel by viewModels<HomeFragmentViewModel>()
     override fun initViewModel(): HomeFragmentViewModel = mViewModel as HomeFragmentViewModel
-
     private fun initViews() {
         categoriesAdapter.categoryClicked = { position, category ->
 //            navigateToCategoriesFragment(category)
@@ -52,28 +51,19 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
 
 
     }
-
-
     private fun navigateToProductDetailsFragment(product: Product) {
         val intent = Intent(context, ProductDetailsActivity::class.java)
         intent.putExtra(Product.PRODUCT, product)
         startActivity(intent)
     }
-
-
-
     private fun navigateToCategoriesFragment(category: Category) {
 //        val action = HomeFragmentDirections.actionHomeFragmentToCategoriesFragment(category)
 //        findNavController().navigate(action)
     }
-
-
-
     override fun onResume() {
         super.onResume()
 //        binding.categoriesShimmerViewContainer.startShimmer()
     }
-
     override fun onPause() {
 //        binding.categoriesShimmerViewContainer.stopShimmer()
         super.onPause()
@@ -84,7 +74,6 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
         dataBinding.unbind()
 
     }
-
     private fun myObserveLiveData() {
         viewModel.event.observe(viewLifecycleOwner,::onEventChange)
         lifecycleScope.launch {

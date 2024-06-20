@@ -24,6 +24,6 @@ import kotlinx.coroutines.flow.StateFlow
 
     sealed class State {
         data object Loading : State()
-        data class Success(val categoriesList : List<Category>? = null) : State()
+        data class Success(val categoriesList : List<Category?>) : State()
     }
 }

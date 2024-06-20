@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CategoriesFragmentViewModel @Inject constructor(
-    val categoriesUseCase : CategoryUseCase,
+    private val categoriesUseCase : CategoryUseCase,
 ) : BaseViewModel() , CategoriesContract.CategoriesViewModel {
 
 
