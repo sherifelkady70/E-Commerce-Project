@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.routee_commerce.databinding.ItemSubcategoryBinding
-import com.example.routee_commerce.model.Subcategory
+import com.route.domain.models.Subcategory
 
 class SubcategoriesAdapter(private var subcategories: List<Subcategory?>? = null) :
     RecyclerView.Adapter<SubcategoriesAdapter.ViewHolder>() {
@@ -44,7 +44,7 @@ class SubcategoriesAdapter(private var subcategories: List<Subcategory?>? = null
 
     }
 
-    fun bindSubcategories(Subcategories: List<Subcategory?>) {
+    fun bindSubcategories(Subcategories: List<Subcategory>?) {
         this.subcategories = Subcategories
         notifyDataSetChanged()
     }

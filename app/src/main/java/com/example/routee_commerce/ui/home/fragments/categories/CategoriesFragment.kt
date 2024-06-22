@@ -14,6 +14,7 @@ import com.example.routee_commerce.ui.home.fragments.categories.adapters.Categor
 import com.example.routee_commerce.ui.home.fragments.categories.adapters.SubcategoriesAdapter
 import com.example.routee_commerce.ui.home.fragments.home.HomeContract
 import com.example.routee_commerce.ui.home.fragments.home.HomeFragmentViewModel
+import com.route.domain.models.Subcategory
 
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
@@ -84,6 +85,7 @@ class CategoriesFragment : BaseFragment<CategoriesFragmentViewModel,FragmentCate
         when(state){
             is CategoriesContract.State.Success -> {
                 showSuccessView(state.categoriesList)
+                showSubCategoriesList(state.subCategoryList)
             }
             is CategoriesContract.State.Loading -> {
                 showLoadingView()
@@ -108,12 +110,20 @@ class CategoriesFragment : BaseFragment<CategoriesFragmentViewModel,FragmentCate
         initCategoryCard(categories?.get(0))
         categories?.get(0)?.let {
             //LoadSubCategories
-
         }
 
 
     }
-
+    private fun showSubCategoriesList(subCategory : List<Subcategory>?){
+        subcategoriesAdapter.bindSubcategories(subCategory)
+        dataBinding.successView.isVisible = true
+        dataBinding.errorView.isVisible = false
+        dataBinding.categoriesShimmerViewContainer.isVisible = false
+        dataBinding.categoriesShimmerViewContainer.stopShimmer()
+        subCategory?.get(0)?.let {
+            //LoadSubCategories
+        }
+    }
 
     private fun showErrorView(message: String) {
         dataBinding.errorView.isVisible = true
