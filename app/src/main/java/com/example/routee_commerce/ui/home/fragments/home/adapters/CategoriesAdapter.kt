@@ -14,6 +14,7 @@ class CategoriesAdapter(private var categories: List<Category?>? = null) :
         RecyclerView.ViewHolder(itemCategoryBinding.root) {
         fun bind(category: Category) {
             itemCategoryBinding.category = category
+            itemCategoryBinding.categoryImg
         }
     }
 

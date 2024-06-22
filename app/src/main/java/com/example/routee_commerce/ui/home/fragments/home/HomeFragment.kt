@@ -40,7 +40,9 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
         categoriesAdapter.categoryClicked = { position, category ->
 //            navigateToCategoriesFragment(category)
         }
-
+        categoryProductsAdapter.addProductToWishListClicked = { product ->
+            navigateToWithListFragment(product)
+        }
         dataBinding.categoriesRv.adapter = categoriesAdapter
         dataBinding.mostSellingProductsRv.adapter = mostSellingProductsAdapter
         dataBinding.categoryProductsRv.adapter = categoryProductsAdapter
@@ -49,6 +51,9 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
 //        mostSellingProductsAdapter.bindProducts()
 
 
+
+    }
+    private fun navigateToWithListFragment(products: Products){
 
     }
     private fun navigateToProductDetailsFragment(product: Product) {

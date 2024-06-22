@@ -9,13 +9,13 @@ import com.example.routee_commerce.databinding.ItemWishlistBinding
 import com.example.routee_commerce.model.Product
 import com.example.routee_commerce.model.WishListItem
 
-class WishListAdapter(var items:List<WishListItem?>?=null):RecyclerView.Adapter<WishListAdapter.ViewHolder>() {
+class WishListAdapter(var items:List<WishListItem?>?=null)
+    :RecyclerView.Adapter<WishListAdapter.ViewHolder>() {
     class ViewHolder(private var viewBinding:ItemWishlistBinding):RecyclerView.ViewHolder(viewBinding.root){
         fun bind(item:WishListItem){
             viewBinding.itemTitle.text = item.title
             viewBinding.productPrice.text = "EGP "+ item.price.toString()
             Glide.with(itemView.context).load(item.imageCover).placeholder(R.drawable.wish_list_placeholder).into(viewBinding.itemImage)
-
         }
     }
 
