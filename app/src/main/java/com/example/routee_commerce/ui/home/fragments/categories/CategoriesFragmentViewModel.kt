@@ -6,6 +6,7 @@ import com.example.routee_commerce.ui.base.BaseViewModel
 import com.example.routee_commerce.utils.SingleLiveEvent
 import com.route.domain.common.Resource
 import com.route.domain.usecases.CategoryUseCase
+import com.route.domain.usecases.SubCategoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,9 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class CategoriesFragmentViewModel @Inject constructor(
     private val categoriesUseCase : CategoryUseCase,
+    private val subCategoryUseCase : SubCategoryUseCase
 ) : BaseViewModel() , CategoriesContract.CategoriesViewModel {
-
-
     private val _state = MutableStateFlow<CategoriesContract.State>(CategoriesContract.State.Loading)
     private val _event = SingleLiveEvent<CategoriesContract.Event>()
 
@@ -38,13 +38,31 @@ class CategoriesFragmentViewModel @Inject constructor(
 
     private fun initPage() {
         getCategories()
+        getSubCategory()
     }
     private fun getCategories() {
         viewModelScope.launch(Dispatchers.IO) {
             categoriesUseCase.invoke().collect{ list ->
                 when(list) {
                    is Resource.Success ->{
-                        _state.emit(CategoriesContract.State.Success(list.data))
+                        _state.emit(CategoriesContract.State.Success(categoriesList = list.data))
+                    }
+                    else -> {
+                        extractViewMessage(list)?.let {
+                            _event.postValue(CategoriesContract.Event.ShowMessage(it))
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getSubCategory(){
+        viewModelScope.launch {
+            subCategoryUseCase.getSubCategory().collect{ list ->
+                when(list) {
+                    is Resource.Success -> {
+                        _state.emit(CategoriesContract.State.Success(subCategoryList = list.data))
                     }
                     else -> {
                         extractViewMessage(list)?.let {

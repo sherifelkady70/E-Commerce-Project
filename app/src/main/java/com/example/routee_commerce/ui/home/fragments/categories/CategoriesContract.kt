@@ -3,6 +3,7 @@ package com.example.routee_commerce.ui.home.fragments.categories
 import androidx.lifecycle.LiveData
 import com.example.routee_commerce.ui.base.ViewMessage
 import com.route.domain.models.Category
+import com.route.domain.models.Subcategory
 import kotlinx.coroutines.flow.StateFlow
  class CategoriesContract {
 
@@ -24,6 +25,7 @@ import kotlinx.coroutines.flow.StateFlow
 
     sealed class State {
         data object Loading : State()
-        data class Success(val categoriesList : List<Category>? =null) : State()
+        data class Success(val categoriesList : List<Category>? =null ,
+            val subCategoryList : List<Subcategory>?=null) : State()
     }
 }
