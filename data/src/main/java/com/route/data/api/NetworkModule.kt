@@ -1,6 +1,7 @@
 package com.route.data.api
 
 import android.util.Log
+import com.route.data.api.webservice.CategoryWebServices
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -47,7 +48,7 @@ object NetworkModule {
     }
 
     @Provides
-    fun provideWebServices(retrofit: Retrofit) : WebServices {
-        return retrofit.create(WebServices::class.java)
+    fun provideWebServices(retrofit: Retrofit) : CategoryWebServices {
+        return retrofit.create(CategoryWebServices::class.java)
     }
 }
