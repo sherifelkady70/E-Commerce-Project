@@ -2,6 +2,7 @@ package com.route.data.api.model
 
 import kotlinx.parcelize.Parcelize
 import android.os.Parcelable
+import com.route.domain.models.Subcategory
 
 @Parcelize
 data class SubcategoryDTO(
@@ -12,3 +13,8 @@ data class SubcategoryDTO(
 	val slug: String? = null,
 	val updatedAt: String? = null
 ) : Parcelable
+{
+	fun toSubCategory() : Subcategory {
+		return Subcategory(name = name , id = id , category = category , slug = slug)
+	}
+}

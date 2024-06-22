@@ -1,7 +1,7 @@
 package com.route.data.contracts.subcategory
 
-import com.route.data.api.model.SubcategoryDTO
+import com.route.domain.models.Subcategory
 
 interface SubCategoryDataSource {
-    suspend fun getSubCategory():List<SubcategoryDTO>?
+    suspend fun getSubCategory():List<Subcategory>?
 }
