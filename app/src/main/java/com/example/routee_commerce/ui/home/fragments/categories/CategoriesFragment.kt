@@ -22,8 +22,8 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CategoriesFragment : BaseFragment<CategoriesFragmentViewModel,FragmentCategoriesBinding>() {
-    private val categoriesAdapter= CategoriesAdapter()
-     private val subcategoriesAdapter= SubcategoriesAdapter()
+    private val categoriesAdapter = CategoriesAdapter()
+    private val subcategoriesAdapter = SubcategoriesAdapter()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -67,7 +67,19 @@ class CategoriesFragment : BaseFragment<CategoriesFragmentViewModel,FragmentCate
         viewModel.event.observe(viewLifecycleOwner,::onEventChange)
        lifecycleScope.launch {
            viewModel.state.collect{
-               renderView(it)
+               when(it) {
+                  is CategoriesContract.State.Success ->{
+                     it.categoriesList?.let { categoriesList ->
+                         showSuccessView(categoriesList)
+                     }
+                      it.subCategoryList.let { subCategoryList ->
+                          subcategoriesAdapter.bindSubcategories(subCategoryList)
+                      }
+                  }
+                  else->{
+                      showLoading()
+                  }
+              }
            }
        }
     }
@@ -85,7 +97,8 @@ class CategoriesFragment : BaseFragment<CategoriesFragmentViewModel,FragmentCate
         when(state){
             is CategoriesContract.State.Success -> {
                 showSuccessView(state.categoriesList)
-                showSubCategoriesList(state.subCategoryList)
+                //showSubCategoriesList(state.subCategoryList)
+                subcategoriesAdapter.bindSubcategories(state.subCategoryList)
             }
             is CategoriesContract.State.Loading -> {
                 showLoadingView()

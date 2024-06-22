@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.routee_commerce.ui.base.BaseViewModel
 import com.example.routee_commerce.utils.SingleLiveEvent
 import com.route.domain.common.Resource
+import com.route.domain.models.Category
+import com.route.domain.models.Subcategory
 import com.route.domain.usecases.CategoryUseCase
 import com.route.domain.usecases.SubCategoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -35,7 +37,8 @@ class CategoriesFragmentViewModel @Inject constructor(
         }
     }
 
-
+    private val categoryList : List<Category>?=null
+    private val subCategoryList : List<Subcategory>?=null
     private fun initPage() {
         getCategories()
         getSubCategory()
@@ -45,7 +48,8 @@ class CategoriesFragmentViewModel @Inject constructor(
             categoriesUseCase.invoke().collect{ list ->
                 when(list) {
                    is Resource.Success ->{
-                        _state.emit(CategoriesContract.State.Success(categoriesList = list.data))
+                        _state.emit(CategoriesContract.State.Success(categoriesList = list.data,
+                            subCategoryList = subCategoryList))
                     }
                     else -> {
                         extractViewMessage(list)?.let {
@@ -56,13 +60,13 @@ class CategoriesFragmentViewModel @Inject constructor(
             }
         }
     }
-
     private fun getSubCategory(){
         viewModelScope.launch {
             subCategoryUseCase.getSubCategory().collect{ list ->
                 when(list) {
                     is Resource.Success -> {
-                        _state.emit(CategoriesContract.State.Success(subCategoryList = list.data))
+                        _state.emit(CategoriesContract.State.Success(subCategoryList = list.data,
+                            categoriesList = categoryList))
                     }
                     else -> {
                         extractViewMessage(list)?.let {
