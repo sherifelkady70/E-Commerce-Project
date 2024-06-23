@@ -5,14 +5,17 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.routee_commerce.R
 import com.example.routee_commerce.databinding.FragmentHomeBinding
 import com.example.routee_commerce.model.Category
 import com.example.routee_commerce.model.Product
 import com.example.routee_commerce.ui.base.BaseFragment
+import com.example.routee_commerce.ui.cart.CartActivity
 import com.example.routee_commerce.ui.home.fragments.home.adapters.CategoriesAdapter
 import com.example.routee_commerce.ui.home.fragments.home.adapters.ProductsAdapter
 import com.example.routee_commerce.ui.productDetails.ProductDetailsActivity
+import com.example.routee_commerce.utils.Constants
 import com.route.domain.models.Products
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -38,7 +41,7 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
     override fun initViewModel(): HomeFragmentViewModel = mViewModel as HomeFragmentViewModel
     private fun initViews() {
         categoriesAdapter.categoryClicked = { position, category ->
-//            navigateToCategoriesFragment(category)
+            navigateToCategoriesFragment(category)
         }
         categoryProductsAdapter.addProductToWishListClicked = { product ->
             navigateToWithListFragment(product)
@@ -61,9 +64,10 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
         intent.putExtra(Product.PRODUCT, product)
         startActivity(intent)
     }
-    private fun navigateToCategoriesFragment(category: Category) {
-//        val action = HomeFragmentDirections.actionHomeFragmentToCategoriesFragment(category)
-//        findNavController().navigate(action)
+    private fun navigateToCategoriesFragment(category: com.route.domain.models.Category) {
+        val intent = Intent(context , CartActivity::class.java)
+        intent.putExtra(Constants.CART_KEY , category)
+        startActivity(intent)
     }
     override fun onResume() {
         super.onResume()
