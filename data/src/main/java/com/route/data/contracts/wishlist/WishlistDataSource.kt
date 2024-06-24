@@ -1,7 +1,7 @@
 package com.route.data.contracts.wishlist
 
-import com.route.data.api.model.wishlist.WishlistDTO
 import com.route.data.api.model.wishlist.WishlistResponse
+import com.route.domain.models.WishlistItem
 
 interface WishlistDataSource {
     suspend fun addProductToWishlist(token : String,productId: String)
@@ -11,5 +11,5 @@ interface WishlistDataSource {
     : WishlistResponse<List<String>?>
 
     suspend fun getLoggedUserWishlist(token : String)
-    : WishlistResponse<List<WishlistDTO>>
+    : List<WishlistItem>?
 }
