@@ -3,6 +3,7 @@ package com.route.data.api
 import android.util.Log
 import com.route.data.api.webservice.CategoryWebServices
 import com.route.data.api.webservice.SubcategoryWebService
+import com.route.data.api.webservice.wishlist.WishlistWebService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -56,5 +57,10 @@ object NetworkModule {
     @Provides
     fun provideSubCategoryWebService(retrofit: Retrofit) : SubcategoryWebService {
         return retrofit.create(SubcategoryWebService::class.java)
+    }
+
+    @Provides
+    fun provideWishlistWebService(retrofit: Retrofit) : WishlistWebService {
+        return retrofit.create(WishlistWebService::class.java)
     }
 }
