@@ -40,11 +40,17 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
     private val mViewModel : HomeContract.ViewModel by viewModels<HomeFragmentViewModel>()
     override fun initViewModel(): HomeFragmentViewModel = mViewModel as HomeFragmentViewModel
     private fun initViews() {
+        dataBinding
+        categoryProductsAdapter.addProductToCartClicked = { product ->
+            navigateToCartActivity(product)
+        }
+        mostSellingProductsAdapter.addProductToCartClicked = { product ->
+            navigateToCartActivity(product)
+        }
         categoriesAdapter.categoryClicked = { position, category ->
-            navigateToCategoriesFragment(category)
+//            navigateToCategoriesFragment(category)
         }
         categoryProductsAdapter.addProductToWishListClicked = { product ->
-            navigateToWithListFragment(product)
         }
         dataBinding.categoriesRv.adapter = categoriesAdapter
         dataBinding.mostSellingProductsRv.adapter = mostSellingProductsAdapter
@@ -53,11 +59,11 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
 //        categoryProductsAdapter.bindProducts()
 //        mostSellingProductsAdapter.bindProducts()
 
-
-
     }
-    private fun navigateToWithListFragment(products: Products){
-
+    private fun navigateToCartActivity(product: Products){
+        val intent = Intent(context , CartActivity::class.java)
+        intent.putExtra(Constants.CART_KEY , product)
+        startActivity(intent)
     }
     private fun navigateToProductDetailsFragment(product: Product) {
         val intent = Intent(context, ProductDetailsActivity::class.java)
@@ -65,9 +71,7 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
         startActivity(intent)
     }
     private fun navigateToCategoriesFragment(category: com.route.domain.models.Category) {
-        val intent = Intent(context , CartActivity::class.java)
-        intent.putExtra(Constants.CART_KEY , category)
-        startActivity(intent)
+
     }
     override fun onResume() {
         super.onResume()

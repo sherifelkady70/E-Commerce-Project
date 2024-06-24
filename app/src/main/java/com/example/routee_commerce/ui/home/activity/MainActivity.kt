@@ -1,5 +1,6 @@
 package com.example.routee_commerce.ui.home.activity
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.routee_commerce.R
 import com.example.routee_commerce.databinding.ActivityMainBinding
+import com.example.routee_commerce.ui.cart.CartActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,7 +23,9 @@ class MainActivity : AppCompatActivity() {
         makeStatusBarTransparentAndIconsClear()
         val navController = findNavController(R.id.home_host_fragment)
         NavigationUI.setupWithNavController(binding.content.bottomNav, navController)
-
+        binding.content.header.cart.setOnClickListener {
+            startActivity(Intent(this@MainActivity , CartActivity::class.java))
+        }
     }
 
     private fun makeStatusBarTransparentAndIconsClear() {
