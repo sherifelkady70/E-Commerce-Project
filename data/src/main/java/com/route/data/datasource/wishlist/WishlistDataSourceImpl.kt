@@ -3,6 +3,7 @@ package com.route.data.datasource.wishlist
 import com.route.data.api.model.wishlist.WishlistResponse
 import com.route.data.api.webservice.wishlist.WishlistWebService
 import com.route.data.contracts.wishlist.WishlistDataSource
+import com.route.data.executeAPI
 import com.route.domain.models.WishlistItem
 import javax.inject.Inject
 
@@ -20,7 +21,9 @@ class WishlistDataSourceImpl @Inject constructor(
         token: String,
         productId: String,
     ): WishlistResponse<List<String>?> {
-        return wishlistWebService.deleteProductFromWishlist(token,productId)
+        val response = executeAPI{ wishlistWebService.deleteProductFromWishlist(token,productId) }
+        return response
+       // return WishlistResponse(response.status, response.message, response.data)
     }
 
     override suspend fun getLoggedUserWishlist(token: String): List<WishlistItem>? {
