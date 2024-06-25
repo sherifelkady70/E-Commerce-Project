@@ -1,6 +1,6 @@
 package com.route.data.contracts.wishlist
 
-import com.route.data.api.model.wishlist.WishlistResponse
+import com.route.domain.models.WishlistResponse
 import com.route.domain.models.WishlistItem
 
 interface WishlistDataSource {
