@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="loginVM"
+            type="com.example.routee_commerce.ui.userAuthentication.fragments.login.LoginViewModel" />
     </data>
 
     <ScrollView
@@ -71,7 +73,8 @@
                     android:maxLines="1"
                     android:minLines="1"
                     android:padding="18dp"
-
+                    android:text="@{loginVM.emailLiveData}"
+                    app:Error="@{loginVM.emailErrorLiveData}"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray_110"
                     android:textSize="14sp"
@@ -100,7 +103,8 @@
                     android:maxLines="1"
                     android:minLines="1"
                     android:padding="18dp"
-
+                    text="@{loginVM.passLiveData}"
+                    app:Error="@{loginVM.emailErrorLiveData}"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray_110"
                     android:textSize="14sp"

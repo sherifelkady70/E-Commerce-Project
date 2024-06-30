@@ -37,7 +37,7 @@ class LoginFragment : Fragment() {
             //login
         }
         viewBinding.donTHaveAnAccountTv.setOnClickListener {
-            // go to register
+           navigateToRegister()
         }
 
     }
