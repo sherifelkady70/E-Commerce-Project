@@ -3,6 +3,7 @@ package com.route.data.api
 import android.util.Log
 import com.route.data.api.webservice.CategoryWebServices
 import com.route.data.api.webservice.SubcategoryWebService
+import com.route.data.api.webservice.auth.AuthenticationWebService
 import com.route.data.api.webservice.wishlist.WishlistWebService
 import dagger.Module
 import dagger.Provides
@@ -62,5 +63,9 @@ object NetworkModule {
     @Provides
     fun provideWishlistWebService(retrofit: Retrofit) : WishlistWebService {
         return retrofit.create(WishlistWebService::class.java)
+    }
+    @Provides
+    fun provideAuthWebService(retrofit: Retrofit) : AuthenticationWebService {
+        return retrofit.create(AuthenticationWebService::class.java)
     }
 }
