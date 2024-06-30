@@ -6,5 +6,5 @@ interface AuthenticationOnlineDataSource {
     suspend fun signIn(
         email:String,
         password:String
-    ) : AuthenticationResponse
+    ) : com.route.domain.models.AuthenticationResponse
 }

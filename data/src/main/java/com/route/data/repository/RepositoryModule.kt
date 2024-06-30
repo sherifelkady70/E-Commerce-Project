@@ -1,9 +1,11 @@
 package com.route.data.repository
 
+import com.route.data.repository.auth.AuthenticationRepositoryImpl
 import com.route.data.repository.category.CategoryRepositoryImpl
 import com.route.data.repository.categoryProducts.CategoryProductsRepositoryImpl
 import com.route.data.repository.products.ProductsRepositoryImpl
 import com.route.data.repository.subcategory.SubCategoryRepositoryImpl
+import com.route.domain.contracts.auth.AuthenticationRepository
 import com.route.domain.contracts.category.CategoriesRepository
 import com.route.domain.contracts.categoryproducts.CategoryProductsRepository
 import com.route.domain.contracts.products.ProductsRepository
@@ -31,4 +33,7 @@ abstract class RepositoryModule {
     @Binds
     abstract fun provideSubCategoryRepository(impl : SubCategoryRepositoryImpl)
     : SubCategoryRepository
+    @Binds
+    abstract fun provideAuthRepository(impl:AuthenticationRepositoryImpl)
+    : AuthenticationRepository
 }
