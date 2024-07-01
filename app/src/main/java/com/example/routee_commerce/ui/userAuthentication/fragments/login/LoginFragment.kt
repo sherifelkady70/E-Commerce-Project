@@ -8,16 +8,21 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.routee_commerce.R
 import com.example.routee_commerce.databinding.FragmentLoginBinding
 import com.example.routee_commerce.ui.home.activity.MainActivity
 import com.example.routee_commerce.utils.hideKeyboard
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
     private lateinit var viewBinding: FragmentLoginBinding
+    lateinit var loginVM : LoginViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,13 +33,15 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        loginVM=ViewModelProvider(this)[LoginViewModel::class.java]
+        viewBinding.loginVM = loginVM
         hideKeyboard()
         initViews()
     }
 
     private fun initViews() {
         viewBinding.loginBtn.setOnClickListener {
-            //login
+           // intent(MainActivity())
         }
         viewBinding.donTHaveAnAccountTv.setOnClickListener {
            navigateToRegister()
@@ -67,6 +74,9 @@ class LoginFragment : Fragment() {
         findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
     }
 
+    fun intent(activity:AppCompatActivity){
+        startActivity(Intent(requireActivity(),activity::class.java))
+    }
     private fun navigateToHome() {
         startActivity(Intent(activity, MainActivity::class.java))
         requireActivity().finish()

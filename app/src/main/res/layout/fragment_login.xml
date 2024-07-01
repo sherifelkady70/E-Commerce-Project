@@ -104,7 +104,7 @@
                     android:minLines="1"
                     android:padding="18dp"
                     text="@{loginVM.passLiveData}"
-                    app:Error="@{loginVM.emailErrorLiveData}"
+                    app:Error="@{loginVM.passErrorLiveData}"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray_110"
                     android:textSize="14sp"
@@ -141,6 +141,7 @@
                         android:textColor="@color/blue"
                         android:textSize="15sp"
                         android:textStyle="bold"
+                        android:onClick="@{ () ->loginVM.login()}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

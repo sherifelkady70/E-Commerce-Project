@@ -14,4 +14,16 @@ class ValidationUseCase  @Inject constructor(){
                 false
         }
     }
+
+    fun isPasswordValid(password:String):Boolean{
+        val passwordRegex = Regex("")
+        if(password.isEmpty()){
+            return false
+        }else{
+            return if (passwordRegex.matches(password))
+                true
+            else
+                false
+        }
+    }
 }
