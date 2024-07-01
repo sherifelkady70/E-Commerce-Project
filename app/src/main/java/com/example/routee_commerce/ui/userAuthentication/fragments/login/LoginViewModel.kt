@@ -13,8 +13,8 @@ class LoginViewModel @Inject constructor(
 ) :ViewModel(){
     val emailLiveData = MutableLiveData<String>()
     val passLiveData = MutableLiveData<String>()
-    val emailErrorLiveData = MutableLiveData<String>()
-    val passErrorLiveData = MutableLiveData<String>()
+    val emailErrorLiveData = MutableLiveData<String?>()
+    val passErrorLiveData = MutableLiveData<String?>()
 
     fun login(){
 
@@ -25,6 +25,8 @@ class LoginViewModel @Inject constructor(
         if(emailLiveData.value!!.isEmpty()){
             emailErrorLiveData.value = "Please Fill Email"
             isValid = false
+        }else{
+            emailErrorLiveData.value = null
         }
         if(passLiveData.value!!.isEmpty()) {
             passErrorLiveData.value = "Please Fill Password"
@@ -32,6 +34,8 @@ class LoginViewModel @Inject constructor(
         }else if( passLiveData.value!!.length <6){
             passErrorLiveData.value = "Please Enter Valid Password"
             isValid=false
+        }else{
+            passErrorLiveData.value=null
         }
         return isValid
     }
