@@ -8,6 +8,7 @@ class LoginContract {
         val event : LiveData<Event>
         val state : StateFlow<State>
         fun doAction(action : Action)
+
     }
     sealed class Action{
         data object Login : Action()
