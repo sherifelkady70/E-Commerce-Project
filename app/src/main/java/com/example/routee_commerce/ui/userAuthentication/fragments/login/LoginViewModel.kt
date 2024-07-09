@@ -6,10 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.routee_commerce.ui.base.BaseViewModel
+import com.example.routee_commerce.utils.SingleLiveEvent
+import com.route.domain.common.Resource
 import com.route.domain.usecases.auth.LoginUseCase
 import com.route.domain.usecases.auth.ValidationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,11 +28,13 @@ class LoginViewModel @Inject constructor(
     val emailErrorLiveData = MutableLiveData<String?>()
     val passErrorLiveData = MutableLiveData<String?>()
 
+    private val _event = SingleLiveEvent<LoginContract.Event>()
     override val event: LiveData<LoginContract.Event>
-        get() {
-            TODO()
-        }
-    override val state: StateFlow<LoginContract.State> = TODO()
+        get() = _event
+    private val _state = MutableStateFlow<LoginContract.State>(LoginContract.State.Pending)
+    override val state: StateFlow<LoginContract.State>
+        get() = _state
+
     override fun doAction(action: LoginContract.Action) {
         TODO("Not yet implemented")
     }
@@ -37,9 +43,20 @@ class LoginViewModel @Inject constructor(
         Log.d("login", "${isValid()}")
         if (!isValid()) return
         viewModelScope.launch(Dispatchers.IO) {
-            loginUseCase.login(emailLiveData.value!!, passLiveData.value!!).collect {
-
-            }
+            _state.emit(LoginContract.State.Logging)
+            delay(1000)
+            loginUseCase
+                .login(emailLiveData.value!!, passLiveData.value!!).collect { response ->
+                    when(response){
+                        is Resource.Success -> _state.emit(LoginContract.State.Logged(response.data))
+                        else ->{
+                            _state.emit(LoginContract.State.Pending)
+                            extractViewMessage(response)?.let {
+                                _event.postValue(LoginContract.Event.ErrorMessage(it))
+                            }
+                        }
+                    }
+                }
         }
     }
 
