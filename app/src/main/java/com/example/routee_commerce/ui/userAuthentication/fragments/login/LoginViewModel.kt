@@ -50,24 +50,4 @@ class LoginViewModel @Inject constructor(
         else
             passErrorLiveData.value="Enter Password"
     }
-
-//    fun validationData():Boolean{
-//        var isValid = true
-//        if(emailLiveData.value!!.isEmpty()){
-//            emailErrorLiveData.value = "Please Fill Email"
-//            isValid = false
-//        }else{
-//            emailErrorLiveData.value = null
-//        }
-//        if(passLiveData.value!!.isEmpty()) {
-//            passErrorLiveData.value = "Please Fill Password"
-//            isValid=false
-//        }else if( passLiveData.value!!.length <6){
-//            passErrorLiveData.value = "Please Enter Valid Password"
-//            isValid=false
-//        }else{
-//            passErrorLiveData.value=null
-//        }
-//        return isValid
-//    }
 }
