@@ -2,6 +2,7 @@ package com.example.routee_commerce.utils
 
 
 import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.example.routee_commerce.R
@@ -33,9 +34,8 @@ class BindingAdapters {
     }
 }
 @BindingAdapter("app:Error")
-fun setTextInputLayoutError(textInputLayout: TextInputLayout, error: String?) {
-    textInputLayout.error = error
-    textInputLayout.errorIconDrawable = null
+fun setTextInputLayoutError(textInput: TextInputLayout, error: String?) {
+    textInput.error = error
 }
 
 @BindingAdapter("app:clearFocusOnCondition")

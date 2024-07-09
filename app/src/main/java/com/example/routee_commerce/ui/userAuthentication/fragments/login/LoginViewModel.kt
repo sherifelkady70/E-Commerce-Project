@@ -1,5 +1,6 @@
 package com.example.routee_commerce.ui.userAuthentication.fragments.login
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -21,6 +22,7 @@ class LoginViewModel @Inject constructor(
     val passErrorLiveData = MutableLiveData<String?>()
 
     fun login(){
+        Log.d("login","${isValid()}")
         if(!isValid()) return
         viewModelScope.launch(Dispatchers.IO) {
             loginUseCase.login(emailLiveData.value!!,passLiveData.value!!).collect{
