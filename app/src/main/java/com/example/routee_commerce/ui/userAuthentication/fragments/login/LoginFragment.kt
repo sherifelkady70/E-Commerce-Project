@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.routee_commerce.R
 import com.example.routee_commerce.databinding.FragmentLoginBinding
+import com.example.routee_commerce.ui.base.BaseFragment
 import com.example.routee_commerce.ui.home.activity.MainActivity
 import com.example.routee_commerce.utils.hideKeyboard
 import com.google.android.material.snackbar.Snackbar
@@ -21,7 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class LoginFragment : Fragment() {
+class LoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>() {
     private lateinit var viewBinding: FragmentLoginBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +38,10 @@ class LoginFragment : Fragment() {
         hideKeyboard()
         initViews()
     }
+
+    override fun getLayoutId(): Int  = R.layout.fragment_login
+
+    override fun initViewModel(): LoginViewModel = loginVM
 
     private fun initViews() {
         viewBinding.loginBtn.setOnClickListener {
