@@ -23,18 +23,10 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>() {
-    private lateinit var viewBinding: FragmentLoginBinding
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        viewBinding = FragmentLoginBinding.inflate(inflater, container, false)
-        return viewBinding.root
-    }
-    private val loginVM : LoginViewModel by viewModels<LoginViewModel>()
+     val loginVM : LoginViewModel by viewModels<LoginViewModel>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewBinding.loginVM = loginVM
+        dataBinding.loginVM = loginVM
         hideKeyboard()
         initViews()
     }
@@ -44,10 +36,10 @@ class LoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>() {
     override fun initViewModel(): LoginViewModel = loginVM
 
     private fun initViews() {
-        viewBinding.loginBtn.setOnClickListener {
+        dataBinding.loginBtn.setOnClickListener {
            // intent(MainActivity())
         }
-        viewBinding.donTHaveAnAccountTv.setOnClickListener {
+        dataBinding.donTHaveAnAccountTv.setOnClickListener {
            navigateToRegister()
         }
 
@@ -55,13 +47,13 @@ class LoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>() {
 
 
     private fun showSuccessView() {
-        viewBinding.icNext.isVisible = true
-        viewBinding.progressBar.isVisible = false
+        dataBinding.icNext.isVisible = true
+        dataBinding.progressBar.isVisible = false
     }
 
     private fun showErrorView(message: String) {
-        viewBinding.icNext.isVisible = true
-        viewBinding.progressBar.isVisible = false
+        dataBinding.icNext.isVisible = true
+        dataBinding.progressBar.isVisible = false
         Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT)
             .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
             .setBackgroundTint(resources.getColor(R.color.white))
@@ -69,8 +61,8 @@ class LoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>() {
     }
 
     private fun showLoadingView() {
-        viewBinding.icNext.isVisible = false
-        viewBinding.progressBar.isVisible = true
+        dataBinding.icNext.isVisible = false
+        dataBinding.progressBar.isVisible = true
     }
 
 
@@ -92,6 +84,6 @@ class LoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>() {
 
     override fun onDestroy() {
         super.onDestroy()
-        viewBinding.unbind()
+        dataBinding.unbind()
     }
 }

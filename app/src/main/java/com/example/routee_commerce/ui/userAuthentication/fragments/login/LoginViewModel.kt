@@ -36,7 +36,7 @@ class LoginViewModel @Inject constructor(
         get() = _state
 
     override fun doAction(action: LoginContract.Action) {
-        TODO("Not yet implemented")
+        login()
     }
 
     fun login() {
@@ -70,7 +70,7 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun validationEmailUseCase() {
-        if (validationUseCase.isEmailValid(emailLiveData.value!!))
+        if (emailLiveData.value?.let { validationUseCase.isEmailValid(it) } == true)
             emailErrorLiveData.value = null
         else
             emailErrorLiveData.value = "Enter Valid Email"
