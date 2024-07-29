@@ -18,7 +18,10 @@ import com.example.routee_commerce.ui.base.BaseFragment
 import com.example.routee_commerce.ui.home.activity.MainActivity
 import com.example.routee_commerce.utils.hideKeyboard
 import com.google.android.material.snackbar.Snackbar
+import com.route.domain.models.AuthenticationResponse
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -26,9 +29,9 @@ class LoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>() {
      val loginVM : LoginViewModel by viewModels<LoginViewModel>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        dataBinding.loginVM = loginVM
         hideKeyboard()
         initViews()
+        observeData()
     }
 
     override fun getLayoutId(): Int  = R.layout.fragment_login
@@ -36,6 +39,8 @@ class LoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>() {
     override fun initViewModel(): LoginViewModel = loginVM
 
     private fun initViews() {
+        dataBinding.loginVM = loginVM
+        dataBinding.lifecycleOwner = this
         dataBinding.loginBtn.setOnClickListener {
           loginVM.doAction(LoginContract.Action.Login)
         }
@@ -44,7 +49,24 @@ class LoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>() {
         }
 
     }
-
+    private fun observeData() {
+        loginVM.event.observe(viewLifecycleOwner){
+            when(it){
+                is LoginContract.Event.ErrorMessage ->{
+                    showErrorView(it.message.message!!)
+                }
+            }
+        }
+        lifecycleScope.launch {
+            loginVM.state.collect{
+                when(it){
+                    is LoginContract.State.Pending -> showLoadingView()
+                    is LoginContract.State.Logged -> navigateToHome(it.response)
+                    is LoginContract.State.Logging -> showSuccessView()
+                }
+            }
+        }
+    }
 
     private fun showSuccessView() {
         dataBinding.icNext.isVisible = true
@@ -73,7 +95,7 @@ class LoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>() {
     fun intent(activity:AppCompatActivity){
         startActivity(Intent(requireActivity(),activity::class.java))
     }
-    private fun navigateToHome() {
+    private fun navigateToHome(userData :AuthenticationResponse) {
         startActivity(Intent(activity, MainActivity::class.java))
         requireActivity().finish()
     }

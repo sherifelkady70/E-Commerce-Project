@@ -60,7 +60,6 @@ dependencies {
 
     // Dagger Hilt
     implementation("com.google.dagger:hilt-android:2.51.1")
-    implementation(libs.androidx.security.crypto.ktx)
     kapt("com.google.dagger:hilt-compiler:2.51.1")
 
     //glide
@@ -74,5 +73,5 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
 
-
+    implementation(libs.androidx.security.crypto.ktx)
 }
