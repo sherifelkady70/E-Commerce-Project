@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 
-class UserData {
+class UserDataUtils {
     fun saveUserInfo(
         context: Context,
         filed: UserDataFiled,

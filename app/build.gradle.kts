@@ -73,5 +73,6 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
 
-    implementation(libs.androidx.security.crypto.ktx)
+    implementation (libs.androidx.security.crypto)
+    implementation (libs.androidx.security.crypto.ktx.v110alpha06)
 }
