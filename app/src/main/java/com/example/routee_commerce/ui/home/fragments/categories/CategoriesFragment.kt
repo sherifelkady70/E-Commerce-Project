@@ -21,7 +21,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class CategoriesFragment : BaseFragment<CategoriesFragmentViewModel,FragmentCategoriesBinding>() {
+class CategoriesFragment : BaseFragment<CategoriesFragmentViewModel,FragmentCategoriesBinding>()
+{
     private val categoriesAdapter = CategoriesAdapter()
     private val subcategoriesAdapter = SubcategoriesAdapter()
 

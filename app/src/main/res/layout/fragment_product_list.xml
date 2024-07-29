@@ -32,8 +32,6 @@
 
                 <include layout="@layout/item_product_placeholder" />
 
-                <include layout="@layout/item_product_placeholder" />
-
             </LinearLayout>
 
             <LinearLayout

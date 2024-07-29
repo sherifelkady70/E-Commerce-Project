@@ -158,7 +158,6 @@
                         android:textColor="@color/blue"
                         android:textSize="15sp"
                         android:textStyle="bold"
-                        android:onClick="@{ () ->loginVM.login()}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

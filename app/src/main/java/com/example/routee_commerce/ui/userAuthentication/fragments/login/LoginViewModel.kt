@@ -39,7 +39,7 @@ class LoginViewModel @Inject constructor(
         login()
     }
 
-    fun login() {
+    private fun login() {
         Log.d("login", "${isValid()}")
         if (!isValid()) return
         viewModelScope.launch(Dispatchers.IO) {

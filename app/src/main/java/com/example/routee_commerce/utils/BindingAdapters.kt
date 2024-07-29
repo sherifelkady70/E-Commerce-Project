@@ -2,7 +2,6 @@ package com.example.routee_commerce.utils
 
 
 import android.view.View
-import android.widget.EditText
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.example.routee_commerce.R

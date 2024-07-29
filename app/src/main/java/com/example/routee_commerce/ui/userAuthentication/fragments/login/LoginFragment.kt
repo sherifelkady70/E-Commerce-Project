@@ -37,7 +37,7 @@ class LoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>() {
 
     private fun initViews() {
         dataBinding.loginBtn.setOnClickListener {
-           // intent(MainActivity())
+          loginVM.doAction(LoginContract.Action.Login)
         }
         dataBinding.donTHaveAnAccountTv.setOnClickListener {
            navigateToRegister()
