@@ -42,10 +42,10 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
     private fun initViews() {
         dataBinding
         categoryProductsAdapter.addProductToCartClicked = { product ->
-            navigateToCartActivity(product)
+            //navigateToCartActivity(product)
         }
         mostSellingProductsAdapter.addProductToCartClicked = { product ->
-            navigateToCartActivity(product)
+           // navigateToCartActivity(product)
         }
         categoriesAdapter.categoryClicked = { position, category ->
 //            navigateToCategoriesFragment(category)

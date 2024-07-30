@@ -62,11 +62,8 @@ class LoginViewModel @Inject constructor(
 
     private fun isValid(): Boolean {
         validationEmailUseCase()
-        validationPasswordUseCase()
-        if (emailErrorLiveData.value == null && passErrorLiveData.value == null)
-            return true
-        else
-            return false
+        //validationPasswordUseCase()
+        return (emailErrorLiveData.value == null && passErrorLiveData.value == null)
     }
 
     private fun validationEmailUseCase() {
@@ -76,11 +73,11 @@ class LoginViewModel @Inject constructor(
             emailErrorLiveData.value = "Enter Valid Email"
     }
 
-    private fun validationPasswordUseCase() {
-        if (validationUseCase.isPasswordValid(passLiveData.value!!))
-            passErrorLiveData.value = null
-        else
-            passErrorLiveData.value = "Enter Password"
-    }
+//    private fun validationPasswordUseCase() {
+//        if (validationUseCase.isPasswordValid(passLiveData.value!!))
+//            passErrorLiveData.value = null
+//        else
+//            passErrorLiveData.value = "Enter Password"
+//    }
 
 }

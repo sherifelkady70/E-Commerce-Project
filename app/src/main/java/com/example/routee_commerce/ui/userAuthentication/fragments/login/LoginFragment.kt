@@ -50,16 +50,16 @@ class LoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>() {
         loginVM.event.observe(viewLifecycleOwner){
             when(it){
                 is LoginContract.Event.ErrorMessage ->{
-                    showErrorView(it.message.message!!)
+                    showErrorView(it.message.title!!)
                 }
             }
         }
         lifecycleScope.launch {
             loginVM.state.collect{
                 when(it){
-                    is LoginContract.State.Pending -> showLoadingView()
+                    is LoginContract.State.Pending -> showSuccessView()
                     is LoginContract.State.Logged -> navigateToHome(it.response)
-                    is LoginContract.State.Logging -> showSuccessView()
+                    is LoginContract.State.Logging -> showLoadingView()
                 }
             }
         }

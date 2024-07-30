@@ -109,6 +109,7 @@
             android:textSize="12sp"
             android:layout_marginStart="80dp" />
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/add_to_card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/blue"
@@ -123,6 +124,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
         <androidx.cardview.widget.CardView
+            android:id="@+id/remove_product"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:padding="20dp"

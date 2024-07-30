@@ -4,12 +4,12 @@ import javax.inject.Inject
 
 class ValidationUseCase  @Inject constructor(){
     fun isEmailValid(email:String) :Boolean{
-        val emailRegex = Regex("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}")
-            if(email.isEmpty()){
-                return false
-            }else{
-                return emailRegex.matches(email)
-            }
+        val emailRegex = Regex("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")
+        return if (email.isNullOrEmpty()) {
+            false
+        } else {
+            emailRegex.matches(email)
+        }
 
     }
 
