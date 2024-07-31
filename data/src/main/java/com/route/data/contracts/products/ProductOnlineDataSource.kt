@@ -7,4 +7,6 @@ interface ProductOnlineDataSource {
     suspend fun getProducts(sortedBy: SortedBy?,
                             categoryId : String?,
                             brandId : String?) : List<Products>?
+
+    suspend fun getSpecificProduct(productId : String) : Products?
 }
