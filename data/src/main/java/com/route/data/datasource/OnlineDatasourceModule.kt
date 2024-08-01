@@ -1,12 +1,14 @@
 package com.route.data.datasource
 
 import com.route.data.contracts.auth.AuthenticationOnlineDataSource
+import com.route.data.contracts.cart.CartDataSource
 import com.route.data.contracts.category.CategoryOnlineDatasource
 import com.route.data.contracts.categoryproducts.CategoryProductsOnlineDatasource
 import com.route.data.contracts.products.ProductOnlineDataSource
 import com.route.data.contracts.subcategory.SubCategoryDataSource
 import com.route.data.contracts.wishlist.WishlistDataSource
 import com.route.data.datasource.auth.AuthenticationOnlineDataSourceImpl
+import com.route.data.datasource.cart.CartDataSourceImpl
 import com.route.data.datasource.category.CategoryOnlineDatasourceImpl
 import com.route.data.datasource.categoryproducts.CategoryProductsOnlineDatasourceImpl
 import com.route.data.datasource.products.ProductsOnlineDatasourceImpl
@@ -46,4 +48,8 @@ abstract class OnlineDatasourceModule {
     @Binds
     abstract fun provideAuthOnlineDataSource(impl:AuthenticationOnlineDataSourceImpl)
     : AuthenticationOnlineDataSource
+
+    @Binds
+    abstract fun provideCartOnlineDataSource(impl: CartDataSourceImpl)
+            : CartDataSource
 }

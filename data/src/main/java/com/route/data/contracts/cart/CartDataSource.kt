@@ -7,24 +7,24 @@ interface CartDataSource {
     suspend fun addProductToCart(
         token : String,
         productId : String
-    ) : Cart<String>
+    ) : Cart<String>?
 
     suspend fun updateCartProductQuantity(
         token : String,
         cartProductId : String ,
         count : String
-    ) : Cart<Products>
+    ) : Cart<Products>?
 
     suspend fun getLoggedUserCart(
         token: String
-    ) : Cart<Products>
+    ) : Cart<Products>?
 
     suspend fun removeSpecificCartItem(
         token: String ,
         cartProductId : String
-    ) : Cart<Products>
+    ) : Cart<Products>?
 
     suspend fun deleteUserCart(
         token: String
-    ) : String
+    ) : String?
 }
