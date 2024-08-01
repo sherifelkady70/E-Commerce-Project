@@ -19,4 +19,8 @@ class ProductsRepositoryImpl @Inject constructor(
     ): Flow<Resource<List<Products>?>> {
         return toFlow{ productsOnlineDatasource.getProducts(sortedBy, categoryId, brandId) }
     }
+
+    override suspend fun getSpecificProduct(productId: String): Flow<Resource<Products?>?> {
+        return toFlow { productsOnlineDatasource.getSpecificProduct(productId) }
+    }
 }

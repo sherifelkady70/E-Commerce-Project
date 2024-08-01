@@ -10,8 +10,8 @@ interface ProductsRepository {
         sortedBy : SortedBy?=null,
         brandId : String?=null
     ) : Flow<Resource<List<Products>?>>
+    suspend fun getSpecificProduct(productId : String) : Flow<Resource<Products?>?>
 }
-
 enum class SortedBy (val value : String){
     PRICE_DESC("-price"),
     PRICE_ASC("price"),
