@@ -6,7 +6,7 @@ import com.route.domain.models.Products
 import kotlinx.coroutines.flow.Flow
 
 interface CartRepository {
-    suspend fun addProductToCart(token: String, productId: String): Flow<Resource<Cart<String>>>
+    suspend fun addProductToCart(token: String, productId: String): Flow<Resource<Cart<String>?>>
 
     suspend fun updateCartProductQuantity(
         token: String,
