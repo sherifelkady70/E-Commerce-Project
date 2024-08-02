@@ -16,7 +16,7 @@ class HomeContract {
     }
 
     sealed class Action { //intent
-        data object InitPage : Action()
+        data class InitPage(val token: String) : Action()
     }
 
     sealed class Event {

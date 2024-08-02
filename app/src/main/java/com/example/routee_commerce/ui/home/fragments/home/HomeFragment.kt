@@ -2,6 +2,7 @@ package com.example.routee_commerce.ui.home.fragments.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -15,7 +16,10 @@ import com.example.routee_commerce.ui.cart.CartActivity
 import com.example.routee_commerce.ui.home.fragments.home.adapters.CategoriesAdapter
 import com.example.routee_commerce.ui.home.fragments.home.adapters.ProductsAdapter
 import com.example.routee_commerce.ui.productDetails.ProductDetailsActivity
+import com.example.routee_commerce.ui.userAuthentication.activity.UserAuthenticationActivity
 import com.example.routee_commerce.utils.Constants
+import com.example.routee_commerce.utils.UserDataFiled
+import com.example.routee_commerce.utils.UserDataUtils
 import com.route.domain.models.Products
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -31,7 +35,7 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
-        viewModel.doAction(HomeContract.Action.InitPage)
+        loadData()
         myObserveLiveData()
         dataBinding.lifecycleOwner = this
     }
@@ -39,6 +43,25 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
     override fun getLayoutId(): Int = R.layout.fragment_home
     private val mViewModel : HomeContract.ViewModel by viewModels<HomeFragmentViewModel>()
     override fun initViewModel(): HomeFragmentViewModel = mViewModel as HomeFragmentViewModel
+
+    private fun loadData(){
+        Log.e("TAG", "onLoadPage")
+        val token = UserDataUtils().getUserData(requireContext(), UserDataFiled.TOKEN)
+        if (token != null) {
+            viewModel.doAction(HomeContract.Action.InitPage(token))
+        } else {
+            showDialog(
+                message = "Login again",
+                posBtnTitle = "",
+                onPosBtnClick = {
+                    startActivity(
+                        Intent(requireActivity(), UserAuthenticationActivity::class.java)
+                    )
+                    requireActivity().finish()
+                },
+            )
+        }
+    }
     private fun initViews() {
         dataBinding
         categoryProductsAdapter.addProductToCartClicked = { product ->

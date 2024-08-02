@@ -35,13 +35,13 @@ class HomeFragmentViewModel @Inject constructor(
     override val state: StateFlow<HomeContract.State> = _state
     override fun doAction(action: HomeContract.Action) { //the only fun that can view communicate with VM
         when(action){
-            HomeContract.Action.InitPage -> {
-                initPage()
+            is HomeContract.Action.InitPage -> {
+                initPage(action.token)
             }
         }
     }
 
-    private fun initPage() {
+    private fun initPage(token: Any?) {
         getCategories()
         getMostSellingProducts()
         getCategoryProducts()
