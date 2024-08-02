@@ -6,7 +6,7 @@ import com.route.domain.models.WishlistResponse
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class AddProductToWishlist @Inject constructor(
+class AddProductToWishlistUseCase @Inject constructor(
     private val wishlistRepository: WishlistRepository
 ){
      suspend operator fun invoke(

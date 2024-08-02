@@ -126,7 +126,7 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
                 showMostSellingProducts(state.mostSellingProductsList)
                 showCategoryProducts(state.categoryProductsList)
             }
-            is HomeContract.State.Loading ->{
+            else ->{
                 showLoadingEvent()
             }
         }

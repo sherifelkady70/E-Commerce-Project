@@ -6,7 +6,7 @@ import com.route.domain.models.WishlistItem
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetLoggedUserWishlist @Inject constructor(
+class GetLoggedUserWishlistUseCase @Inject constructor(
     private val wishlistRepository: WishlistRepository
 ) {
 

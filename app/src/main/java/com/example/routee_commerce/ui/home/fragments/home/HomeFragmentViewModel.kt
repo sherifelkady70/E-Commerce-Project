@@ -10,10 +10,16 @@ import com.route.domain.models.Products
 import com.route.domain.usecases.CategoryProductsUseCase
 import com.route.domain.usecases.CategoryUseCase
 import com.route.domain.usecases.MostSellingProductsUseCase
+import com.route.domain.usecases.cart.AddProductToCardUseCase
+import com.route.domain.usecases.cart.GetLoggedUserCartUseCase
+import com.route.domain.usecases.wishlist.AddProductToWishlistUseCase
+import com.route.domain.usecases.wishlist.DeleteProductFromWishlistUseCase
+import com.route.domain.usecases.wishlist.GetLoggedUserWishlistUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,7 +27,12 @@ import javax.inject.Inject
 class HomeFragmentViewModel @Inject constructor(
     private val categoryUseCase: CategoryUseCase,
     private val mostSellingProductsUseCase: MostSellingProductsUseCase,
-    private val categoryProductsUseCase : CategoryProductsUseCase
+    private val categoryProductsUseCase : CategoryProductsUseCase,
+    private val getLoggedUserCartUseCase: GetLoggedUserCartUseCase,
+    private val getLoggedUserWishlist: GetLoggedUserWishlistUseCase,
+    private val addProductToCardUseCase: AddProductToCardUseCase,
+    private val addProductToWishListUseCase : AddProductToWishlistUseCase,
+    private val deleteProductFromWishlistUseCase: DeleteProductFromWishlistUseCase
 ) : BaseViewModel() , HomeContract.ViewModel {
 //     val categoriesList = MutableLiveData<List<com.route.domain.models.Category>?>()
 
@@ -38,10 +49,19 @@ class HomeFragmentViewModel @Inject constructor(
             is HomeContract.Action.InitPage -> {
                 initPage(action.token)
             }
+            is HomeContract.Action.AddProductToCart ->{
+
+            }
+            is HomeContract.Action.AddProductToWishList ->{
+
+            }
+            is HomeContract.Action.RemoveProductFromWishList ->{
+
+            }
         }
     }
 
-    private fun initPage(token: Any?) {
+    private fun initPage(token: String?) {
         getCategories()
         getMostSellingProducts()
         getCategoryProducts()
@@ -51,6 +71,13 @@ class HomeFragmentViewModel @Inject constructor(
     private val mostSellingProducts: List<Products>? = null
     private val categoryProducts: List<Products>? = null
 
+    private fun loadData(token : String){
+        viewModelScope.launch {
+            combine(
+
+            )
+        }
+    }
     private fun getCategoryProducts() {
         viewModelScope.launch(Dispatchers.IO) {
             categoryProductsUseCase.getCategoryProducts().collect{ it ->

@@ -6,7 +6,7 @@ import com.route.domain.models.WishlistResponse
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class DeleteProductFromWishlist @Inject constructor(
+class DeleteProductFromWishlistUseCase @Inject constructor(
     private val wishlistRepository: WishlistRepository
 ) {
 
