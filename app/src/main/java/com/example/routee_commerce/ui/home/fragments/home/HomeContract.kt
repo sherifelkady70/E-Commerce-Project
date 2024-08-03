@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.example.routee_commerce.model.WishListItem
 import com.example.routee_commerce.ui.base.ViewMessage
 import com.route.domain.models.Cart
+import com.route.domain.models.CartItem
 import com.route.domain.models.Category
 import com.route.domain.models.Products
 import kotlinx.coroutines.flow.StateFlow
@@ -37,7 +38,7 @@ class HomeContract {
             val mostSellingProductsList: List<Products>? = null,
             val categoryProductsList: List<Products>? = null,
             val wishList: List<WishListItem>? = null,
-            val cart: List<Cart<Products>>? = null,
+            val cart: List<CartItem<Products>>? = null,
         ) : State()
 
     }
