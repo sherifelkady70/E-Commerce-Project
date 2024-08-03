@@ -34,8 +34,6 @@ class HomeFragmentViewModel @Inject constructor(
     private val addProductToWishListUseCase : AddProductToWishlistUseCase,
     private val deleteProductFromWishlistUseCase: DeleteProductFromWishlistUseCase
 ) : BaseViewModel() , HomeContract.ViewModel {
-//     val categoriesList = MutableLiveData<List<com.route.domain.models.Category>?>()
-
 
     private val _state = MutableStateFlow<HomeContract.State>(HomeContract.State.Loading)
     private val _event = SingleLiveEvent<HomeContract.Event>()
