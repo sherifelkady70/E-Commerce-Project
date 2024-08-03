@@ -51,7 +51,7 @@ class HomeFragmentViewModel @Inject constructor(
                 loadData(action.token)
             }
             is HomeContract.Action.AddProductToCart ->{
-
+                addProductToCart(action.token,action.productId)
             }
             is HomeContract.Action.AddProductToWishList ->{
 
@@ -143,11 +143,30 @@ class HomeFragmentViewModel @Inject constructor(
             addProductToCardUseCase(token,productId).collect{
                 when(it){
                     is Resource.Success ->{
-
+                        _event.postValue(
+                            HomeContract.Event.productAddedToCartSuccess(it.data?.products!!)
+                        )
                     }
                     else ->{
                         extractViewMessage(it)?.let { message ->
                             _event.postValue(HomeContract.Event.ShowMessage(message))
+                        }
+                    }
+                }
+            }
+        }
+    }
+    private fun addProductToWishList(token: String,productId: String){
+        viewModelScope.launch {
+            addProductToWishListUseCase(token,productId).collect{
+                when(it){
+                    is Resource.Success ->{
+                        _event.postValue(HomeContract.Event.productAddedToWishListSuccess(
+                            it.data.message!!,it.data.data!!
+                        ))
+                    }else ->{
+                        extractViewMessage(it)?.let {
+                            _event.postValue(HomeContract.Event.ShowMessage(it))
                         }
                     }
                 }

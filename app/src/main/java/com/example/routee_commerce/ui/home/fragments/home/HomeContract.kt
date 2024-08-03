@@ -29,15 +29,15 @@ class HomeContract {
         data class ShowMessage(val message : ViewMessage) : Event()
         data class ShowLoading(val loading : Boolean) : Event()
 
-        data class productAddedToCartSuccess(val cartItems : List<CartItem<String>>?)
+        data class productAddedToCartSuccess(val cartItems : List<CartItem<String>>?) : Event()
         data class productAddedToWishListSuccess(
             val message : String,
             val wishList : List<String>
-        )
+        ) : Event()
         data class productRemovedFromWishListSuccess(
             val message : String,
             val wishList : List<String>
-        )
+        ) : Event()
     }
 
     sealed class State {
