@@ -138,6 +138,22 @@ class HomeFragmentViewModel @Inject constructor(
             }
         }
     }
+    private fun addProductToCart(token:String,productId:String){
+        viewModelScope.launch {
+            addProductToCardUseCase(token,productId).collect{
+                when(it){
+                    is Resource.Success ->{
+
+                    }
+                    else ->{
+                        extractViewMessage(it)?.let { message ->
+                            _event.postValue(HomeContract.Event.ShowMessage(message))
+                        }
+                    }
+                }
+            }
+        }
+    }
 //    private fun getCategoryProducts() {
 //        viewModelScope.launch(Dispatchers.IO) {
 //            categoryProductsUseCase.getCategoryProducts().collect{ it ->
