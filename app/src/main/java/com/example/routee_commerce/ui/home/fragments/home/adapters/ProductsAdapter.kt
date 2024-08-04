@@ -96,6 +96,15 @@ class ProductsAdapter(private var context: Context) :
         notifyDataSetChanged()
     }
 
+
+    fun setWishListData(newWishList : List<String?>){
+        this.wishList = newWishList
+        notifyDataSetChanged()
+    }
+    fun setCartItems(newCartItems : List<String?>){
+        this.cartItems = newCartItems
+        notifyDataSetChanged()
+    }
     var openProductsDetails : ((product:Products) -> Unit)?=null
     var addProductToWishListClicked: ((product: Products) -> Unit)? = null
     var addProductToCartClicked: ((product: Products) -> Unit)? = null
