@@ -9,6 +9,7 @@ with Clean Arch with multi-modules ,MVI , repository pattern , Hilt , Retrofit.
      * MVVM and MVI.
      * Repository Pattern.
      * Hilt.
+     * Coroutines and Flows
      * Unit Testing.
 
 <table>
