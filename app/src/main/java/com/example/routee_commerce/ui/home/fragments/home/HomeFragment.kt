@@ -29,8 +29,8 @@ import kotlinx.coroutines.launch
 class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
 
      private val categoriesAdapter = CategoriesAdapter()
-     private val mostSellingProductsAdapter = ProductsAdapter()
-     private val categoryProductsAdapter = ProductsAdapter()
+     private val mostSellingProductsAdapter = ProductsAdapter(requireContext())
+     private val categoryProductsAdapter = ProductsAdapter(requireContext())
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

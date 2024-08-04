@@ -18,8 +18,22 @@ class ProductsAdapter(private var context: Context) :
     inner class ViewHolder(val context: Context , val itemProductBinding: ItemProductBinding) :
         RecyclerView.ViewHolder(itemProductBinding.root) {
 
-        fun bind(product: Products? , wishList : List<String?> , cartItem : List<String?>) {
+        fun bind(product: Products?, wishList: List<String?>, cartItem: List<String?>) {
             itemProductBinding.product = product
+            for(item in wishList){
+                if(product?.id == item){
+                    itemProductBinding.isWishList = true
+                }else{
+                    itemProductBinding.isWishList = false
+                }
+            }
+            for (item in cartItems){
+                if(product?.id == item){
+                    itemProductBinding.isCarItem = true
+                }else{
+                    itemProductBinding.isCarItem = false
+                }
+            }
             itemProductBinding.executePendingBindings()
             if (product?.priceAfterDiscount != null) {
                 itemProductBinding.productPrice.text = "EGP ${product?.priceAfterDiscount}"

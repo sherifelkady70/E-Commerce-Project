@@ -74,7 +74,7 @@
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="2dp"
                     android:layout_marginBottom="2dp"
-                    android:src="@drawable/add_to_wishlist_selector"
+                    android:src="@{isWishList==false ? @drawable/ic_add : @drawable/ic_like}"
                     />
             </androidx.cardview.widget.CardView>
 
@@ -143,7 +143,7 @@
                 android:layout_height="30dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
-                android:src="@drawable/ic_plus_circle"
+                android:src="@{isCarItem==false ? @drawable/ic_plus : @drawable/ic_shoppingcart}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
