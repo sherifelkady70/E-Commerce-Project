@@ -60,18 +60,32 @@ class ProductsAdapter(private var context: Context) :
         )
     }
 
-    override fun getItemCount() = products?.size ?: 0
+    override fun getItemCount() = products.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val product = products!![position]
-        holder.bind(product)
+        val product = products[position]
+        holder.bind(product , wishList,cartItems)
+        openProductsDetails?.let {
+            holder.itemView.setOnClickListener {
+                openProductsDetails?.invoke(product!!)
+            }
+        }
         addProductToWishListClicked?.let {
             holder.itemProductBinding.addToWishlistBtn.setOnClickListener {
-                addProductToWishListClicked?.invoke(product!!)
+                when (holder.itemProductBinding.isWishList) {
+                    true -> {
+                        removeProductFromWishListClicked?.invoke(product!!)
+                    }
+
+                    else -> {
+                        addProductToWishListClicked?.invoke(product!!)
+                    }
+                }
             }
         }
         addProductToCartClicked?.let {
             holder.itemProductBinding.addToCartBtn.setOnClickListener {
+                if(holder.itemProductBinding.isCarItem == true) return@setOnClickListener
                 addProductToCartClicked?.invoke(product!!)
             }
         }
@@ -82,7 +96,9 @@ class ProductsAdapter(private var context: Context) :
         notifyDataSetChanged()
     }
 
+    var openProductsDetails : ((product:Products) -> Unit)?=null
     var addProductToWishListClicked: ((product: Products) -> Unit)? = null
     var addProductToCartClicked: ((product: Products) -> Unit)? = null
+    var removeProductFromWishListClicked : ((product: Products) -> Unit)? = null
 
 }

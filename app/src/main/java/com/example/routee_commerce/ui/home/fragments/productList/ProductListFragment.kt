@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.example.routee_commerce.databinding.FragmentProductListBinding
+import com.example.routee_commerce.ui.home.fragments.home.adapters.ProductsAdapter
 import com.route.domain.models.Products
 
 
@@ -16,7 +17,7 @@ class ProductListFragment : Fragment() {
     }
     lateinit var binding: FragmentProductListBinding
 
-     val productsAdapter = ProductsAdapter()
+     val productsAdapter = ProductsAdapter(requireContext())
     lateinit var searchKeyWord: String
     override fun onCreateView(
         inflater: LayoutInflater,
