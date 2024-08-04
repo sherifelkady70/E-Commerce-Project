@@ -48,6 +48,7 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
         Log.e("TAG", "onLoadPage")
         val token = UserDataUtils().getUserData(requireContext(), UserDataFiled.TOKEN)
         if (token != null) {
+            Log.e("TAG", "$token")
             viewModel.doAction(HomeContract.Action.InitPage(token))
         } else {
             showDialog(
@@ -121,13 +122,27 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
 
     private fun renderView(state : HomeContract.State) {
         when(state){
-            is HomeContract.State.Success ->{
-                showCategories(state.categoriesList)
-                showMostSellingProducts(state.mostSellingProductsList)
-                showCategoryProducts(state.categoryProductsList)
+            is HomeContract.State.Idle->{}
+            is HomeContract.State.Loading ->{
+                showLoading()
             }
-            else ->{
-                showLoadingEvent()
+            is HomeContract.State.Success ->{
+                hideLoading()
+                //showCategories(state.categoriesList)
+                state.categoriesList?.let {
+                    Log.e("TAG","$it")
+                    showCategories(it)
+                }
+                state.mostSellingProductsList?.let {
+                    Log.e("TAG","$it")
+                    showMostSellingProducts(it)
+                }
+                state.categoryProductsList?.let {
+                    Log.e("TAG","$it")
+                    showCategoryProducts(it)
+                }
+//                showMostSellingProducts(state.mostSellingProductsList)
+//                showCategoryProducts(state.categoryProductsList)
             }
         }
     }
@@ -137,9 +152,17 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
             is HomeContract.Event.ShowMessage -> {
                 showDialog(event.message.message)
             }
+            is HomeContract.Event.productRemovedFromWishListSuccess ->{
 
-            is HomeContract.Event.ShowLoading -> {
-              showLoading()
+            }
+            is HomeContract.Event.productAddedToCartSuccess ->{
+
+            }
+            is HomeContract.Event.productAddedToWishListSuccess ->{
+                event
+            }
+            is HomeContract.Event.ShowLoading ->{
+
             }
         }
     }

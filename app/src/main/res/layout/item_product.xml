@@ -4,11 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="product"
             type="com.route.domain.models.Products" />
-
+        <variable
+            name="isWishList"
+            type="Boolean" />
+        <variable
+            name="isCarItem"
+            type="Boolean" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -70,7 +74,8 @@
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="2dp"
                     android:layout_marginBottom="2dp"
-                    android:src="@drawable/add_to_wishlist_selector" />
+                    android:src="@drawable/add_to_wishlist_selector"
+                    />
             </androidx.cardview.widget.CardView>
 
             <TextView

@@ -54,10 +54,10 @@ class HomeFragmentViewModel @Inject constructor(
                 addProductToCart(action.token,action.productId)
             }
             is HomeContract.Action.AddProductToWishList ->{
-
+                addProductToWishList(action.token,action.productId)
             }
             is HomeContract.Action.RemoveProductFromWishList ->{
-
+                deleteProductToWishList(action.token,action.productId)
             }
         }
     }
@@ -165,6 +165,24 @@ class HomeFragmentViewModel @Inject constructor(
                             it.data.message!!,it.data.data!!
                         ))
                     }else ->{
+                        extractViewMessage(it)?.let {
+                            _event.postValue(HomeContract.Event.ShowMessage(it))
+                        }
+                    }
+                }
+            }
+        }
+    }
+    private fun deleteProductToWishList(token: String,productId: String){
+        viewModelScope.launch {
+            deleteProductFromWishlistUseCase(token,productId).collect{
+                when(it){
+                    is Resource.Success ->{
+                        _event.postValue(HomeContract.Event.productRemovedFromWishListSuccess(
+                            it.data.message!!,it.data.data!!
+                        ))
+                    }
+                    else->{
                         extractViewMessage(it)?.let {
                             _event.postValue(HomeContract.Event.ShowMessage(it))
                         }

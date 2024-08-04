@@ -1,5 +1,6 @@
 package com.example.routee_commerce.ui.home.fragments.home.adapters
 
+import android.content.Context
 import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,13 +10,15 @@ import com.example.routee_commerce.databinding.ItemProductBinding
 import com.route.domain.models.Products
 
 
-class ProductsAdapter(private var products: List<Products?>? = null) :
+class ProductsAdapter(private var context: Context) :
     RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
-
-    inner class ViewHolder(val itemProductBinding: ItemProductBinding) :
+    private var products: List<Products?> = emptyList()
+    private var wishList: List<String?> = emptyList()
+    private var cartItems: List<String?> = emptyList()
+    inner class ViewHolder(val context: Context , val itemProductBinding: ItemProductBinding) :
         RecyclerView.ViewHolder(itemProductBinding.root) {
 
-        fun bind(product: Products?) {
+        fun bind(product: Products? , wishList : List<String?> , cartItem : List<String?>) {
             itemProductBinding.product = product
             itemProductBinding.executePendingBindings()
             if (product?.priceAfterDiscount != null) {
@@ -34,6 +37,7 @@ class ProductsAdapter(private var products: List<Products?>? = null) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
+            context ,
             ItemProductBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
