@@ -1,5 +1,6 @@
 package com.example.routee_commerce.ui.home.fragments.home
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.routee_commerce.model.HomeData
@@ -19,7 +20,6 @@ import com.route.domain.usecases.wishlist.AddProductToWishlistUseCase
 import com.route.domain.usecases.wishlist.DeleteProductFromWishlistUseCase
 import com.route.domain.usecases.wishlist.GetLoggedUserWishlistUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -38,6 +38,7 @@ class HomeFragmentViewModel @Inject constructor(
     private val deleteProductFromWishlistUseCase: DeleteProductFromWishlistUseCase
 ) : BaseViewModel() , HomeContract.ViewModel {
 
+
     private val _state = MutableStateFlow<HomeContract.State>(HomeContract.State.Loading)
     private val _event = SingleLiveEvent<HomeContract.Event>()
     override val event: LiveData<HomeContract.Event>
@@ -45,6 +46,7 @@ class HomeFragmentViewModel @Inject constructor(
             return _event
         }
     override val state: StateFlow<HomeContract.State> = _state
+
     override fun doAction(action: HomeContract.Action) { //the only fun that can view communicate with VM
         when(action){
             is HomeContract.Action.InitPage -> {
@@ -73,6 +75,7 @@ class HomeFragmentViewModel @Inject constructor(
     private val categoryProducts: List<Products>? = null
     private val wishList: List<WishListItem>? = null
     private val cartItems: List<CartItem<Products>>? = null
+
 
     private fun loadData(token : String){
         viewModelScope.launch {
@@ -126,12 +129,15 @@ class HomeFragmentViewModel @Inject constructor(
                         _event.postValue(HomeContract.Event.ShowMessage(it))
                     }
                 }
+                Log.d("TAG","in view model$data")
                 data
             }.collect{
+                Log.d("TAG","in collect in view model$it")
                 it?.let {
                     _state.emit(
                         HomeContract.State.Success(
-                            categories,categoryProducts,mostSellingProducts,wishList,cartItems
+                            it.categoriesList,it.categoryProductsList,it.mostSellingProductsList
+                            ,it.wishList,it.cartList
                         )
                     )
                 }
@@ -144,7 +150,7 @@ class HomeFragmentViewModel @Inject constructor(
                 when(it){
                     is Resource.Success ->{
                         _event.postValue(
-                            HomeContract.Event.productAddedToCartSuccess(it.data?.products!!)
+                            HomeContract.Event.ProductAddedToCartSuccess(it.data?.products!!)
                         )
                     }
                     else ->{
@@ -161,7 +167,7 @@ class HomeFragmentViewModel @Inject constructor(
             addProductToWishListUseCase(token,productId).collect{
                 when(it){
                     is Resource.Success ->{
-                        _event.postValue(HomeContract.Event.productAddedToWishListSuccess(
+                        _event.postValue(HomeContract.Event.ProductAddedToWishListSuccess(
                             it.data.message!!,it.data.data!!
                         ))
                     }else ->{
@@ -178,7 +184,7 @@ class HomeFragmentViewModel @Inject constructor(
             deleteProductFromWishlistUseCase(token,productId).collect{
                 when(it){
                     is Resource.Success ->{
-                        _event.postValue(HomeContract.Event.productRemovedFromWishListSuccess(
+                        _event.postValue(HomeContract.Event.ProductRemovedFromWishListSuccess(
                             it.data.message!!,it.data.data!!
                         ))
                     }

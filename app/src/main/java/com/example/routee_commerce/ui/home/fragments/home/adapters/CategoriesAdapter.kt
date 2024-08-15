@@ -36,7 +36,7 @@ class CategoriesAdapter(private var categories: List<Category?>? = null) :
         if (!holder.itemView.hasOnClickListeners()) {
             categoryClicked?.let { categoryClicked ->
                 holder.itemView.setOnClickListener {
-                    categoryClicked.invoke(position, category)
+                    categoryClicked.invoke(category)
                 }
             }
         }
@@ -48,5 +48,5 @@ class CategoriesAdapter(private var categories: List<Category?>? = null) :
         notifyDataSetChanged()
     }
 
-    var categoryClicked: ((position: Int, category: Category) -> Unit)? = null
+    var categoryClicked: ((category: Category) -> Unit)? = null
 }

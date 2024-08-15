@@ -31,7 +31,6 @@ class WishListFragment : Fragment() {
 
     private fun initView() {
         viewBinding.recyclerView.adapter = adapter
-
     }
 
 

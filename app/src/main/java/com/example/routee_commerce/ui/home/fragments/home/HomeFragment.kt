@@ -6,10 +6,8 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import com.example.routee_commerce.R
 import com.example.routee_commerce.databinding.FragmentHomeBinding
-import com.example.routee_commerce.model.Category
 import com.example.routee_commerce.model.Product
 import com.example.routee_commerce.ui.base.BaseFragment
 import com.example.routee_commerce.ui.cart.CartActivity
@@ -29,8 +27,9 @@ import kotlinx.coroutines.launch
 class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
 
      private val categoriesAdapter = CategoriesAdapter()
-     private val mostSellingProductsAdapter = ProductsAdapter(requireContext())
-     private val categoryProductsAdapter = ProductsAdapter(requireContext())
+     private val mostSellingProductsAdapter by lazy { ProductsAdapter(requireContext()) }
+     private val categoryProductsAdapter by lazy {   ProductsAdapter(requireContext()) }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -47,6 +46,7 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
     private fun loadData(){
         Log.e("TAG", "onLoadPage")
         val token = UserDataUtils().getUserData(requireContext(), UserDataFiled.TOKEN)
+        Log.e("TAG", "token of user in load data $token")
         if (token != null) {
             Log.e("TAG", "$token")
             viewModel.doAction(HomeContract.Action.InitPage(token))
@@ -63,26 +63,55 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
             )
         }
     }
-    private fun initViews() {
-        dataBinding
-        categoryProductsAdapter.addProductToCartClicked = { product ->
-            //navigateToCartActivity(product)
-        }
-        mostSellingProductsAdapter.addProductToCartClicked = { product ->
-           // navigateToCartActivity(product)
-        }
-        categoriesAdapter.categoryClicked = { position, category ->
-//            navigateToCategoriesFragment(category)
-        }
-        categoryProductsAdapter.addProductToWishListClicked = { product ->
-        }
-        dataBinding.categoriesRv.adapter = categoriesAdapter
-        dataBinding.mostSellingProductsRv.adapter = mostSellingProductsAdapter
-        dataBinding.categoryProductsRv.adapter = categoryProductsAdapter
-        //dataBinding.categoryNameTv.text = getString(R.string.electronics)
-//        categoryProductsAdapter.bindProducts()
-//        mostSellingProductsAdapter.bindProducts()
 
+    private fun initViews(){
+        val token = UserDataUtils().getUserData(requireContext(),UserDataFiled.TOKEN)
+        Log.d("TAG","token of user $token")
+        dataBinding.categoriesRv.adapter = categoriesAdapter
+//        categoriesAdapter.categoryClicked ={category ->
+//        }
+        initCategoryProductsAdapters(token)
+        initMostSellingAdapters(token)
+    }
+    private fun initCategoryProductsAdapters(token : String?) {
+        dataBinding.categoryProductsRv.adapter = categoryProductsAdapter
+//        categoryProductsAdapter.openProductsDetails={
+//        }
+        categoryProductsAdapter.addProductToCartClicked = { product ->
+            token?.let {
+                viewModel.doAction(HomeContract.Action.AddProductToCart(it,product.id!!))
+            }
+        }
+        categoryProductsAdapter.addProductToWishListClicked ={ product ->
+            token?.let {
+                viewModel.doAction(HomeContract.Action.AddProductToWishList(token,product.id!!))
+            }
+        }
+        categoryProductsAdapter.removeProductFromWishListClicked ={ product ->
+            token?.let {
+                viewModel.doAction(HomeContract.Action.RemoveProductFromWishList(token,product.id!!))
+            }
+        }
+    }
+    private fun initMostSellingAdapters(token : String?) {
+        dataBinding.mostSellingProductsRv.adapter = mostSellingProductsAdapter
+//        mostSellingProductsAdapter.openProductsDetails ={
+//        }
+        mostSellingProductsAdapter.addProductToCartClicked = { product ->
+            token?.let {
+                viewModel.doAction(HomeContract.Action.AddProductToCart(it,product.id!!))
+            }
+        }
+        mostSellingProductsAdapter.addProductToWishListClicked = { product ->
+            token?.let {
+                viewModel.doAction(HomeContract.Action.AddProductToWishList(it,product.id!!))
+            }
+        }
+        mostSellingProductsAdapter.removeProductFromWishListClicked = { product ->
+            token?.let {
+                viewModel.doAction(HomeContract.Action.RemoveProductFromWishList(it,product.id!!))
+            }
+        }
     }
     private fun navigateToCartActivity(product: Products){
         val intent = Intent(context , CartActivity::class.java)
@@ -94,9 +123,10 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
         intent.putExtra(Product.PRODUCT, product)
         startActivity(intent)
     }
-    private fun navigateToCategoriesFragment(category: com.route.domain.models.Category) {
-
-    }
+//    private fun navigateToCategoriesFragment(category: com.route.domain.models.Category) {
+//        val action =  actionHomeFragmentToCategoriesFragment(category)
+//        findNavController().navigate(action)
+//    }
     override fun onResume() {
         super.onResume()
 //        binding.categoriesShimmerViewContainer.startShimmer()
@@ -104,7 +134,6 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
     override fun onPause() {
 //        binding.categoriesShimmerViewContainer.stopShimmer()
         super.onPause()
-
     }
     override fun onDestroyView() {
         super.onDestroyView()
@@ -112,6 +141,7 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
 
     }
     private fun myObserveLiveData() {
+        Log.d("TAG","in observe live data fun ")
         viewModel.event.observe(viewLifecycleOwner,::onEventChange)
         lifecycleScope.launch {
             viewModel.state.collect{
@@ -121,6 +151,7 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
     }
 
     private fun renderView(state : HomeContract.State) {
+        Log.d("TAG","in render view fun $state")
         when(state){
             is HomeContract.State.Idle->{}
             is HomeContract.State.Loading ->{
@@ -130,15 +161,15 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
                 hideLoading()
                 //showCategories(state.categoriesList)
                 state.categoriesList?.let {
-                    Log.e("TAG","$it")
+                    Log.d("TAG","category state $it")
                     showCategories(it)
                 }
                 state.mostSellingProductsList?.let {
-                    Log.e("TAG","$it")
+                    Log.d("TAG","most selling state $it")
                     showMostSellingProducts(it)
                 }
                 state.categoryProductsList?.let {
-                    Log.e("TAG","$it")
+                    Log.d("TAG","products state $it")
                     showCategoryProducts(it)
                 }
 //                showMostSellingProducts(state.mostSellingProductsList)
@@ -148,26 +179,30 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
     }
 
     private fun onEventChange(event : HomeContract.Event) {
+        Log.d("TAG","in event fun $event")
         when(event) {
             is HomeContract.Event.ShowMessage -> {
                 showDialog(event.message.message)
+                Log.d("TAG","message in event of showDialog${event.message.message}")
             }
-            is HomeContract.Event.productRemovedFromWishListSuccess ->{
+            is HomeContract.Event.ProductRemovedFromWishListSuccess ->{
 
             }
-            is HomeContract.Event.productAddedToCartSuccess ->{
+            is HomeContract.Event.ProductAddedToCartSuccess ->{
 
             }
-            is HomeContract.Event.productAddedToWishListSuccess ->{
-                event
+            is HomeContract.Event.ProductAddedToWishListSuccess ->{
+
             }
             is HomeContract.Event.ShowLoading ->{
-
+                Log.d("TAG","in showLoading event")
+                showLoadingEvent()
             }
         }
     }
 
     private fun showCategories(categories  : List<com.route.domain.models.Category>?) {
+        Log.d("TAG","in show categories $categories")
         dataBinding.categoriesShimmerViewContainer.hideShimmer()
             if (categories != null) {
                 categoriesAdapter.bindCategories(categories)

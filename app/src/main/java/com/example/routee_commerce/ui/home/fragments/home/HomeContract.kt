@@ -1,12 +1,11 @@
 package com.example.routee_commerce.ui.home.fragments.home
 
 import androidx.lifecycle.LiveData
-import com.example.routee_commerce.model.WishListItem
 import com.example.routee_commerce.ui.base.ViewMessage
-import com.route.domain.models.Cart
 import com.route.domain.models.CartItem
 import com.route.domain.models.Category
 import com.route.domain.models.Products
+import com.route.domain.models.WishlistItem
 import kotlinx.coroutines.flow.StateFlow
 
 class HomeContract {
@@ -29,12 +28,12 @@ class HomeContract {
         data class ShowMessage(val message : ViewMessage) : Event()
         data class ShowLoading(val loading : Boolean) : Event()
 
-        data class productAddedToCartSuccess(val cartItems : List<CartItem<String>>?) : Event()
-        data class productAddedToWishListSuccess(
+        data class ProductAddedToCartSuccess(val cartItems : List<CartItem<String>>?) : Event()
+        data class ProductAddedToWishListSuccess(
             val message : String,
             val wishList : List<String>
         ) : Event()
-        data class productRemovedFromWishListSuccess(
+        data class ProductRemovedFromWishListSuccess(
             val message : String,
             val wishList : List<String>
         ) : Event()
@@ -47,7 +46,7 @@ class HomeContract {
             val categoriesList: List<Category>? = null,
             val mostSellingProductsList: List<Products>? = null,
             val categoryProductsList: List<Products>? = null,
-            val wishList: List<WishListItem>? = null,
+            val wishList: List<WishlistItem>? = null,
             val cart: List<CartItem<Products>>? = null,
         ) : State()
 

@@ -11,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="600dp"
+        android:contentDescription="TODO"
         android:src="@drawable/ellipse"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,6 +21,7 @@
     <ImageView
         android:layout_width="400dp"
         android:layout_height="170dp"
+        android:contentDescription="TODO"
         android:src="@drawable/logo_white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,11 +32,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="600dp"
+        android:contentDescription="TODO"
         android:src="@drawable/ellipse2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

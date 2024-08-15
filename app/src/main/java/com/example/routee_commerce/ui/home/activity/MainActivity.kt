@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.routee_commerce.R
 import com.example.routee_commerce.databinding.ActivityMainBinding
@@ -21,13 +23,17 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setContentView(binding.root)
         makeStatusBarTransparentAndIconsClear()
-        val navController = findNavController(R.id.home_host_fragment)
-        NavigationUI.setupWithNavController(binding.content.bottomNav, navController)
+        initViews()
         binding.content.header.cart.setOnClickListener {
             startActivity(Intent(this@MainActivity , CartActivity::class.java))
         }
     }
 
+    fun initViews(){
+        val navHost = supportFragmentManager.findFragmentById(R.id.home_host_fragment) as NavHostFragment
+        val navController = navHost.navController
+        NavigationUI.setupWithNavController(binding.content.bottomNav, navController)
+    }
     private fun makeStatusBarTransparentAndIconsClear() {
         window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
