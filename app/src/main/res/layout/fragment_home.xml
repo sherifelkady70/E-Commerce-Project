@@ -105,7 +105,7 @@
                     android:textColor="@color/blue"
                     android:textSize="18sp"
                     app:layout_constraintTop_toBottomOf="@id/categories_shimmer_view_container"
-                    tools:text="Products" />
+                    android:text="Products" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/categories_rv"

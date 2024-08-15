@@ -40,5 +40,7 @@ class MainActivity : AppCompatActivity() {
         window.statusBarColor = Color.TRANSPARENT
     }
 
+    fun updateCartCount(){
 
+    }
 }

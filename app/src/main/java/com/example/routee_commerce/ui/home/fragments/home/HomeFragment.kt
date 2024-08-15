@@ -11,6 +11,7 @@ import com.example.routee_commerce.databinding.FragmentHomeBinding
 import com.example.routee_commerce.model.Product
 import com.example.routee_commerce.ui.base.BaseFragment
 import com.example.routee_commerce.ui.cart.CartActivity
+import com.example.routee_commerce.ui.home.activity.MainActivity
 import com.example.routee_commerce.ui.home.fragments.home.adapters.CategoriesAdapter
 import com.example.routee_commerce.ui.home.fragments.home.adapters.ProductsAdapter
 import com.example.routee_commerce.ui.productDetails.ProductDetailsActivity
@@ -46,7 +47,6 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
     private fun loadData(){
         Log.e("TAG", "onLoadPage")
         val token = UserDataUtils().getUserData(requireContext(), UserDataFiled.TOKEN)
-        Log.e("TAG", "token of user in load data $token")
         if (token != null) {
             Log.e("TAG", "$token")
             viewModel.doAction(HomeContract.Action.InitPage(token))
@@ -182,11 +182,19 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
         Log.d("TAG","in event fun $event")
         when(event) {
             is HomeContract.Event.ShowMessage -> {
-                showDialog(event.message.message)
-                Log.d("TAG","message in event of showDialog${event.message.message}")
+                showSnakeBar(event.message.message!!)
+                Log.d("TAG","message in event of snake bar ${event.message.message}")
             }
             is HomeContract.Event.ProductAddedToCartSuccess -> {
-
+                val cartIds = event.cartItems?.map { it.product }
+                UserDataUtils().saveUserInfo(
+                    requireContext(),
+                    UserDataFiled.CART_ITEM_COUNT,
+                    cartIds?.size.toString()
+                )
+                categoryProductsAdapter.setCartItems(cartIds ?: emptyList())
+                mostSellingProductsAdapter.setCartItems(cartIds ?: emptyList())
+                (activity as MainActivity).updateCartCount()
             }
             is HomeContract.Event.ProductRemovedFromWishListSuccess ->{
 

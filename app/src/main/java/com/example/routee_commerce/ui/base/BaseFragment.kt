@@ -1,12 +1,10 @@
 package com.example.routee_commerce.ui.base
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
@@ -102,7 +100,7 @@ abstract class BaseFragment<VM:BaseViewModel,DB:ViewDataBinding> : Fragment() {
     }
 
 
-    fun showErrorView(message: String) {
+    fun showSnakeBar(message: String) {
         Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT)
             .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
             .setBackgroundTint(resources.getColor(R.color.white))

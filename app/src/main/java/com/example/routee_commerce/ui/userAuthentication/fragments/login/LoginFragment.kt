@@ -15,7 +15,6 @@ import com.example.routee_commerce.ui.home.activity.MainActivity
 import com.example.routee_commerce.utils.UserDataUtils
 import com.example.routee_commerce.utils.UserDataFiled
 import com.example.routee_commerce.utils.hideKeyboard
-import com.google.android.material.snackbar.Snackbar
 import com.route.domain.models.AuthenticationResponse
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -52,7 +51,7 @@ class LoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>() {
                 is LoginContract.Event.ErrorMessage ->{
                     dataBinding.icNext.isVisible = true
                     dataBinding.progressBar.isVisible = false
-                    showErrorView(it.message.title!!)
+                    showSnakeBar(it.message.title!!)
                 }
             }
         }
@@ -71,14 +70,6 @@ class LoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>() {
         dataBinding.icNext.isVisible = true
         dataBinding.progressBar.isVisible = false
     }
-
-//    private fun showErrorView(message: String) {
-//
-//        Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT)
-//            .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
-//            .setBackgroundTint(resources.getColor(R.color.white))
-//            .show()
-//    }
 
     private fun showLoadingView() {
         dataBinding.icNext.isVisible = false
