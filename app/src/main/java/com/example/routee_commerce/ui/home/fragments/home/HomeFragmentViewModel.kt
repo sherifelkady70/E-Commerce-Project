@@ -64,12 +64,6 @@ class HomeFragmentViewModel @Inject constructor(
         }
     }
 
-//    private fun initPage(token: String?) {
-//        getCategories()
-//        getMostSellingProducts()
-//        getCategoryProducts()
-//    }
-
     private val categories: List<Category>? = null
     private val mostSellingProducts: List<Products>? = null
     private val categoryProducts: List<Products>? = null
@@ -197,55 +191,4 @@ class HomeFragmentViewModel @Inject constructor(
             }
         }
     }
-//    private fun getCategoryProducts() {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            categoryProductsUseCase.getCategoryProducts().collect{ it ->
-//                when(it) {
-//                   is Resource.Success -> {
-//                    _state.emit(HomeContract.State.Success(categoryProductsList = it.data ,
-//                        categoriesList = categories, mostSellingProductsList = mostSellingProducts))
-//                }
-//                    else -> {
-//                        extractViewMessage(it)?.let {
-//                            _event.postValue(HomeContract.Event.ShowMessage(it))
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
-//    private fun getMostSellingProducts() {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            mostSellingProductsUseCase.invoke().collect{ it ->
-//                when(it) {
-//                    is Resource.Success ->{
-//                        _state.emit(HomeContract.State.Success(mostSellingProductsList = it.data,
-//                            categoriesList = categories, categoryProductsList = categoryProducts))
-//                    }
-//                    else ->{
-//                        extractViewMessage(it)?.let {
-//                            _event.postValue(HomeContract.Event.ShowMessage(it))
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
-//    private fun getCategories(){
-//        viewModelScope.launch(Dispatchers.IO){
-//            categoryUseCase.invoke().collect{ it ->
-//                when(it){
-//                    is Resource.Success ->{
-//                        _state.emit(HomeContract.State.Success(categoriesList = it.data, categoryProductsList = categoryProducts
-//                        , mostSellingProductsList = mostSellingProducts))
-//                    }
-//                    else ->{
-//                        extractViewMessage(it)?.let {
-//                            _event.postValue(HomeContract.Event.ShowMessage(it))
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
 }

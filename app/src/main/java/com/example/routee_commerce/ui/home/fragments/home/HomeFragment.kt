@@ -185,12 +185,13 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
                 showDialog(event.message.message)
                 Log.d("TAG","message in event of showDialog${event.message.message}")
             }
+            is HomeContract.Event.ProductAddedToCartSuccess -> {
+
+            }
             is HomeContract.Event.ProductRemovedFromWishListSuccess ->{
 
             }
-            is HomeContract.Event.ProductAddedToCartSuccess ->{
 
-            }
             is HomeContract.Event.ProductAddedToWishListSuccess ->{
 
             }

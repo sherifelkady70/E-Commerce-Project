@@ -50,6 +50,8 @@ class LoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>() {
         loginVM.event.observe(viewLifecycleOwner){
             when(it){
                 is LoginContract.Event.ErrorMessage ->{
+                    dataBinding.icNext.isVisible = true
+                    dataBinding.progressBar.isVisible = false
                     showErrorView(it.message.title!!)
                 }
             }
@@ -70,14 +72,13 @@ class LoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>() {
         dataBinding.progressBar.isVisible = false
     }
 
-    private fun showErrorView(message: String) {
-        dataBinding.icNext.isVisible = true
-        dataBinding.progressBar.isVisible = false
-        Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT)
-            .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
-            .setBackgroundTint(resources.getColor(R.color.white))
-            .show()
-    }
+//    private fun showErrorView(message: String) {
+//
+//        Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT)
+//            .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
+//            .setBackgroundTint(resources.getColor(R.color.white))
+//            .show()
+//    }
 
     private fun showLoadingView() {
         dataBinding.icNext.isVisible = false

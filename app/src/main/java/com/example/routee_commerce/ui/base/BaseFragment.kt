@@ -6,10 +6,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import com.example.routee_commerce.R
+import com.google.android.material.snackbar.Snackbar
 
 
 abstract class BaseFragment<VM:BaseViewModel,DB:ViewDataBinding> : Fragment() {
@@ -99,4 +101,11 @@ abstract class BaseFragment<VM:BaseViewModel,DB:ViewDataBinding> : Fragment() {
 
     }
 
+
+    fun showErrorView(message: String) {
+        Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT)
+            .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
+            .setBackgroundTint(resources.getColor(R.color.white))
+            .show()
+    }
 }
