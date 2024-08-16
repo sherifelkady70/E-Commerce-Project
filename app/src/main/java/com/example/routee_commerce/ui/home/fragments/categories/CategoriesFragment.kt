@@ -100,6 +100,7 @@ class CategoriesFragment : BaseFragment<CategoriesFragmentViewModel,FragmentCate
                 showSuccessView(state.categoriesList)
                 //showSubCategoriesList(state.subCategoryList)
                 subcategoriesAdapter.bindSubcategories(state.subCategoryList)
+                hideLoading()
             }
             is CategoriesContract.State.Loading -> {
                 showLoadingView()

@@ -15,6 +15,7 @@ import retrofit2.http.Path
 
 interface CartWebService {
 
+    @FormUrlEncoded
     @POST("api/v1/cart")
     suspend fun addProductToCard(
         @Header("token") token : String,

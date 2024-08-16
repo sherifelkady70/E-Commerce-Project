@@ -103,7 +103,7 @@ abstract class BaseFragment<VM:BaseViewModel,DB:ViewDataBinding> : Fragment() {
     fun showSnakeBar(message: String) {
         Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT)
             .setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
-            .setBackgroundTint(resources.getColor(R.color.white))
+            .setBackgroundTint(resources.getColor(R.color.black))
             .show()
     }
 }

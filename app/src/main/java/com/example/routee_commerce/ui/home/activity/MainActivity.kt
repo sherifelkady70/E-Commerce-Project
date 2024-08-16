@@ -5,6 +5,8 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -13,6 +15,8 @@ import androidx.navigation.ui.NavigationUI
 import com.example.routee_commerce.R
 import com.example.routee_commerce.databinding.ActivityMainBinding
 import com.example.routee_commerce.ui.cart.CartActivity
+import com.example.routee_commerce.utils.UserDataFiled
+import com.example.routee_commerce.utils.UserDataUtils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -41,6 +45,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun updateCartCount(){
+        val cartItemCount =
+            UserDataUtils().getUserData(this, UserDataFiled.CART_ITEM_COUNT)
 
+        if (cartItemCount == "0" || cartItemCount == null) {
+            binding.content.header.counterView.isGone = true
+        } else {
+            binding.content.header.counterView.isVisible = true
+            binding.content.header.cartItemsCounter.text = cartItemCount
+        }
     }
 }

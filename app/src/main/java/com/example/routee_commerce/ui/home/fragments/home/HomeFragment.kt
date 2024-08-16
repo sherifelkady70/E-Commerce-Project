@@ -79,12 +79,15 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
 //        }
         categoryProductsAdapter.addProductToCartClicked = { product ->
             token?.let {
+                Log.d("TAG","in add product to cart click it = $it")
+                Log.d("TAG","in add product to cart click token = $token")
                 viewModel.doAction(HomeContract.Action.AddProductToCart(it,product.id!!))
             }
         }
         categoryProductsAdapter.addProductToWishListClicked ={ product ->
             token?.let {
                 viewModel.doAction(HomeContract.Action.AddProductToWishList(token,product.id!!))
+                Log.d("TAG","in add product to cart click token = $token")
             }
         }
         categoryProductsAdapter.removeProductFromWishListClicked ={ product ->
@@ -182,10 +185,11 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
         Log.d("TAG","in event fun $event")
         when(event) {
             is HomeContract.Event.ShowMessage -> {
-                showSnakeBar(event.message.message!!)
+                showSnakeBar(event.message.title ?: "fail in something")
                 Log.d("TAG","message in event of snake bar ${event.message.message}")
             }
             is HomeContract.Event.ProductAddedToCartSuccess -> {
+                Log.d("TAG","in add to cart ${event.cartItems}")
                 val cartIds = event.cartItems?.map { it.product }
                 UserDataUtils().saveUserInfo(
                     requireContext(),
@@ -197,11 +201,17 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel,FragmentHomeBinding>() {
                 (activity as MainActivity).updateCartCount()
             }
             is HomeContract.Event.ProductRemovedFromWishListSuccess ->{
-
+                Log.d("TAG"," in remove from wishlist ${event.wishList}")
+                categoryProductsAdapter.setWishListData(event.wishList)
+                mostSellingProductsAdapter.setWishListData(event.wishList)
+                showSnakeBar(event.message)
             }
 
             is HomeContract.Event.ProductAddedToWishListSuccess ->{
-
+                Log.d("TAG","in add to wishlist ${event.wishList}")
+                categoryProductsAdapter.setWishListData(event.wishList)
+                mostSellingProductsAdapter.setWishListData(event.wishList)
+                showSnakeBar(event.message)
             }
             is HomeContract.Event.ShowLoading ->{
                 Log.d("TAG","in showLoading event")
