@@ -73,7 +73,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     // Preferences DataStore
-    implementation ("androidx.datastore:datastore-preferences:1.1.1-alpha01")
+    implementation("androidx.datastore:datastore:1.1.1")
 
     implementation (libs.androidx.security.crypto)
     implementation (libs.androidx.security.crypto.ktx.v110alpha06)
