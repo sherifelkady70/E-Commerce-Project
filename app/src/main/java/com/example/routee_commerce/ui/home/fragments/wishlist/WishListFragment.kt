@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.example.routee_commerce.databinding.FragmentWishlistBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class WishListFragment : Fragment() {
      private lateinit var viewBinding:FragmentWishlistBinding
     private val adapter=WishListAdapter()
